@@ -44,7 +44,12 @@ The Medicine Planning System is a simple Java-based application designed for hos
 * A Doctor can add a new medicine (POST)
 * A Doctor can delete a patient (DELETE)
 * A Doctor can delete medicines if it's not assigned to a patient (DELETE)
-* A Doctor can add a medicine and instruction to the patients data (PUT)
+* A Doctor can add a medicine and prescription to the patients data (PUT)
+
+* Doctor ----< Prescription >---- Patient
+                  |
+                  v
+               Medicine
 
 * Patients can see their assigned medicines (GET)
 * Patients cannot access to other patients information
