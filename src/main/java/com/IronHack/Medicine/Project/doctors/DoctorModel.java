@@ -1,6 +1,10 @@
 package com.IronHack.Medicine.Project.doctors;
 
+import com.IronHack.Medicine.Project.prescription.PrescriptionModel;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
+
+import java.util.List;
 
 @Entity
 @Table(name = "doctors")
@@ -17,6 +21,10 @@ public class DoctorModel {
     private String username;
     private String password;
 
+    @OneToMany(mappedBy = "doctor",fetch = FetchType.LAZY)
+    @JsonIgnore
+    private List<PrescriptionModel> prescriptions;
+
     public DoctorModel(DoctorateTitles drTitle, String drLastName, String username, String password) {
         this.drTitle = drTitle;
         this.drLastName = drLastName;
@@ -26,6 +34,14 @@ public class DoctorModel {
 
     public DoctorModel() {
 
+    }
+
+    public Long getDoctorID() {
+        return doctorID;
+    }
+
+    public List<PrescriptionModel> getPrescriptions() {
+        return prescriptions;
     }
 
     public DoctorateTitles getDrTitle() {
