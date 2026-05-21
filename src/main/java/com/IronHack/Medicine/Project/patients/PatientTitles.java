@@ -1,6 +1,6 @@
 package com.IronHack.Medicine.Project.patients;
 
-public enum patientTitles {
+public enum PatientTitles {
 
     MR,
     MS,

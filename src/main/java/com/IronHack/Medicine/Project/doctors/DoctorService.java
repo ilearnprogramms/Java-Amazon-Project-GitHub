@@ -1,36 +1,36 @@
 package com.IronHack.Medicine.Project.doctors;
 
-import com.IronHack.Medicine.Project.security.globalStatus;
+import com.IronHack.Medicine.Project.security.GlobalStatus;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 
 @Service
-public class doctorService {
+public class DoctorService {
 
     @Autowired
-    private doctorRepository doctorRepository;
+    private DoctorRepository doctorRepository;
 
-    public List<doctorModel> getAllDoctors() {
+    public List<DoctorModel> getAllDoctors() {
         return doctorRepository.findAll();
     }
 
-    public globalStatus addNewDoctor(doctorDTO doctorDTO){
+    public GlobalStatus addNewDoctor(DoctorDTO doctorDTO){
         if (doctorDTO.getDrLastName().length() < 3)
-            return globalStatus.NAME_TOO_SHORT;
+            return GlobalStatus.NAME_TOO_SHORT;
 
         if (doctorDTO.getDrLastName().length() > 19)
-            return globalStatus.NAME_TOO_LONG;
+            return GlobalStatus.NAME_TOO_LONG;
 
-        doctorModel doctor = new doctorModel();
+        DoctorModel doctor = new DoctorModel();
                 doctor.setDrTitle(doctorDTO.getDrTitle());
                 doctor.setDrLastName(doctorDTO.getDrLastName());
                 doctor.setUsername(doctorDTO.getUsername());
                 doctor.setPassword(doctorDTO.getPassword());
                 doctorRepository.save(doctor);
 
-        return globalStatus.DOCTOR_CREATED;
+        return GlobalStatus.DOCTOR_CREATED;
     }
 
 }

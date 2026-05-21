@@ -1,6 +1,6 @@
 package com.IronHack.Medicine.Project.security;
 
-public enum globalStatus {
+public enum GlobalStatus {
 
     NAME_TOO_SHORT,
     NAME_TOO_LONG,

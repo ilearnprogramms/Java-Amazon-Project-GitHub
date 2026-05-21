@@ -4,35 +4,35 @@ import jakarta.persistence.*;
 
 @Entity
 @Table(name = "doctors")
-public class doctorModel {
+public class DoctorModel {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long doctorID;
 
     @Enumerated(EnumType.STRING)
-    private doctorateTitles drTitle;
+    private DoctorateTitles drTitle;
     private String drLastName;
 
     private String username;
     private String password;
 
-    public doctorModel(doctorateTitles drTitle, String drLastName, String username, String password) {
+    public DoctorModel(DoctorateTitles drTitle, String drLastName, String username, String password) {
         this.drTitle = drTitle;
         this.drLastName = drLastName;
         this.username = username;
         this.password = password;
     }
 
-    public doctorModel() {
+    public DoctorModel() {
 
     }
 
-    public doctorateTitles getDrTitle() {
+    public DoctorateTitles getDrTitle() {
         return drTitle;
     }
 
-    public void setDrTitle(doctorateTitles drTitle) {
+    public void setDrTitle(DoctorateTitles drTitle) {
         this.drTitle = drTitle;
     }
 

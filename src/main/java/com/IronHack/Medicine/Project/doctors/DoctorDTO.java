@@ -1,9 +1,7 @@
 
 package com.IronHack.Medicine.Project.doctors;
 
-import java.util.ArrayList;
 import java.util.LinkedHashMap;
-import java.util.List;
 import java.util.Map;
 import javax.annotation.processing.Generated;
 import com.fasterxml.jackson.annotation.JsonAnyGetter;
@@ -21,10 +19,10 @@ import com.fasterxml.jackson.annotation.JsonPropertyOrder;
     "password"
 })
 @Generated("jsonschema2pojo")
-public class doctorDTO {
+public class DoctorDTO {
 
     @JsonProperty("drTitle")
-    private doctorateTitles drTitle;
+    private DoctorateTitles drTitle;
     @JsonProperty("drLastName")
     private String drLastName;
     @JsonProperty("username")
@@ -34,7 +32,7 @@ public class doctorDTO {
     @JsonIgnore
     private Map<String, Object> additionalProperties = new LinkedHashMap<String, Object>();
 
-    public doctorDTO(doctorateTitles drTitle, String drLastName, String username, String password) {
+    public DoctorDTO(DoctorateTitles drTitle, String drLastName, String username, String password) {
         this.drTitle = drTitle;
         this.drLastName = drLastName;
         this.username = username;
@@ -42,12 +40,12 @@ public class doctorDTO {
     }
 
     @JsonProperty("drTitle")
-    public doctorateTitles getDrTitle() {
+    public DoctorateTitles getDrTitle() {
         return drTitle;
     }
 
     @JsonProperty("drTitle")
-    public void setDrTitle(doctorateTitles drTitle) {
+    public void setDrTitle(DoctorateTitles drTitle) {
         this.drTitle = drTitle;
     }
 
@@ -94,7 +92,7 @@ public class doctorDTO {
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();
-        sb.append(com.IronHack.Medicine.Project.doctors.doctorDTO.class.getName()).append('@').append(Integer.toHexString(System.identityHashCode(this))).append('[');
+        sb.append(DoctorDTO.class.getName()).append('@').append(Integer.toHexString(System.identityHashCode(this))).append('[');
         sb.append("drTitle");
         sb.append('=');
         sb.append(((this.drTitle == null)?"<null>":this.drTitle));

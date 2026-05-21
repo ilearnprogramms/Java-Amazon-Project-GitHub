@@ -5,25 +5,23 @@ import jakarta.persistence.*;
 
 @Entity
 @Table(name = "medicines")
-public class medicineModel {
+public class MedicineModel {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long medicineID;
 
     private String medicineName;
-    private String medicineInstruction;
 
     @Enumerated(EnumType.STRING)
-    private medicineCategory medicineCategory;
+    private MedicineCategory medicineCategory;
 
-    public medicineModel(String medicineName, String medicineInstruction, medicineCategory medicineCategory) {
+    public MedicineModel(String medicineName, MedicineCategory medicineCategory) {
         this.medicineName = medicineName;
-        this.medicineInstruction = medicineInstruction;
         this.medicineCategory = medicineCategory;
     }
 
-    public medicineModel() {
+    public MedicineModel() {
 
     }
 
@@ -35,19 +33,11 @@ public class medicineModel {
         this.medicineName = medicineName;
     }
 
-    public String getMedicineInstruction() {
-        return medicineInstruction;
-    }
-
-    public void setMedicineInstruction(String medicineInstruction) {
-        this.medicineInstruction = medicineInstruction;
-    }
-
-    public medicineCategory getMedicineCategory() {
+    public MedicineCategory getMedicineCategory() {
         return medicineCategory;
     }
 
-    public void setMedicineCategory(medicineCategory medicineCategory) {
+    public void setMedicineCategory(MedicineCategory medicineCategory) {
         this.medicineCategory = medicineCategory;
     }
 
@@ -56,7 +46,6 @@ public class medicineModel {
         return "medicineModel{" +
                 "medicineID=" + medicineID +
                 ", medicineName='" + medicineName + '\'' +
-                ", medicineInstruction='" + medicineInstruction + '\'' +
                 ", medicineCategory='" + medicineCategory + '\'' +
                 '}';
     }

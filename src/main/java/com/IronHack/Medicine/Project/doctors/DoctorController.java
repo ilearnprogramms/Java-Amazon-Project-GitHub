@@ -1,6 +1,6 @@
 package com.IronHack.Medicine.Project.doctors;
 
-import com.IronHack.Medicine.Project.security.globalStatus;
+import com.IronHack.Medicine.Project.security.GlobalStatus;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -8,24 +8,21 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-import static java.util.stream.Collectors.toList;
-
-
 @RestController
 @RequestMapping("/api/doctor")
-public class doctorController {
+public class DoctorController {
 
     @Autowired
-    private doctorService doctorService;
+    private DoctorService doctorService;
 
     // TODO LOGIN
 
     @GetMapping("/doctors")
     public ResponseEntity getAllDoctors() {
 
-        List<doctorDTO> doctorDTOs = doctorService.getAllDoctors()
+        List<DoctorDTO> doctorDTOs = doctorService.getAllDoctors()
                 .stream()
-                .map(d -> new doctorDTO(
+                .map(d -> new DoctorDTO(
                         d.getDrTitle(),
                         d.getDrLastName(),
                         d.getUsername(),
@@ -38,18 +35,19 @@ public class doctorController {
 
 
     @PostMapping("/newdoctor")
-    public ResponseEntity addNewDoctor(@RequestBody doctorDTO doctorDTO) {
+    public ResponseEntity addNewDoctor(@RequestBody DoctorDTO doctorDTO) {
 
-        globalStatus status = doctorService.addNewDoctor(doctorDTO);
+        GlobalStatus status = doctorService.addNewDoctor(doctorDTO);
 
-        if (status.equals(globalStatus.NAME_TOO_SHORT))
+        if (status.equals(GlobalStatus.NAME_TOO_SHORT))
             return
                     ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Name is too short");
-        if (status.equals(globalStatus.NAME_TOO_LONG))
+        if (status.equals(GlobalStatus.NAME_TOO_LONG))
             return
                     ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Name is too long");
         return
                 ResponseEntity.status(HttpStatus.CREATED).body(doctorDTO);
+        // TODO ADD MORE ERROR HANDLING
     }
 
 }

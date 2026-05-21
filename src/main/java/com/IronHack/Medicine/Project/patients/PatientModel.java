@@ -5,7 +5,7 @@ import jakarta.persistence.*;
 
 @Entity
 @Table(name = "patients")
-public class patientModel {
+public class PatientModel {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -15,17 +15,17 @@ public class patientModel {
     private String password;
 
     @Enumerated(EnumType.STRING)
-    private patientTitles patientTitle;
+    private PatientTitles patientTitle;
     private String patientLastName;
 
-    public patientModel(String username, String password, patientTitles patientTitle, String patientLastName) {
+    public PatientModel(String username, String password, PatientTitles patientTitle, String patientLastName) {
         this.username = username;
         this.password = password;
         this.patientTitle = patientTitle;
         this.patientLastName = patientLastName;
     }
 
-    public patientModel() {
+    public PatientModel() {
 
     }
 
@@ -45,11 +45,11 @@ public class patientModel {
         this.password = password;
     }
 
-    public patientTitles getPatientTitle() {
+    public PatientTitles getPatientTitle() {
         return patientTitle;
     }
 
-    public void setPatientTitle(patientTitles patientTitle) {
+    public void setPatientTitle(PatientTitles patientTitle) {
         this.patientTitle = patientTitle;
     }
 

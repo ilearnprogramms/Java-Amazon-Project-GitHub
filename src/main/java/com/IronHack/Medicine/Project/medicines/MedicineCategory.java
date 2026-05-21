@@ -1,6 +1,6 @@
 package com.IronHack.Medicine.Project.medicines;
 
-public enum medicineCategory {
+public enum MedicineCategory {
 
     HUMAN,
     VETERINARY,
