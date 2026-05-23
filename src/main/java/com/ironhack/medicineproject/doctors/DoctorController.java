@@ -1,9 +1,11 @@
 package com.ironhack.medicineproject.doctors;
 
 import com.ironhack.medicineproject.security.GlobalStatus;
+import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.web.csrf.CsrfToken;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -16,6 +18,15 @@ public class DoctorController {
     private DoctorService doctorService;
 
     // TODO LOGIN
+    @GetMapping("/")
+    public String greet(HttpServletRequest request) {
+        return "Welcome to Medicine Project!\n " + request.getSession().getId();
+    }
+
+    @GetMapping("/csrf-token")
+    public CsrfToken getCsrfToken(HttpServletRequest request){
+        return (CsrfToken) request.getAttribute("_csrf");
+    }
 
     @GetMapping("/doctors")
     public ResponseEntity getAllDoctors() {
@@ -32,7 +43,6 @@ public class DoctorController {
 
         return ResponseEntity.status(HttpStatus.OK).body(doctorDTOs);
     }
-
 
     @PostMapping("/newdoctor")
     public ResponseEntity addNewDoctor(@RequestBody DoctorDTO doctorDTO) {
