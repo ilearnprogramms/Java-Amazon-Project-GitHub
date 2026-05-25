@@ -1,8 +1,5 @@
 package com.ironhack.medicineproject.service;
 
-import com.ironhack.medicineproject.dto.DoctorDTO;
-import com.ironhack.medicineproject.dto.MedicineDTO;
-import com.ironhack.medicineproject.dto.PatientDTO;
 import com.ironhack.medicineproject.dto.PrescriptionDTO;
 import com.ironhack.medicineproject.enums.GlobalStatus;
 import com.ironhack.medicineproject.model.DoctorModel;
@@ -16,6 +13,8 @@ import com.ironhack.medicineproject.repository.PrescriptionRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class PrescriptionService {
 
@@ -27,6 +26,15 @@ public class PrescriptionService {
     PatientRepository patientRepository;
     @Autowired
     DoctorRepository doctorRepository;
+
+    public List<PrescriptionModel> getAllPrescriptions(){
+        return  prescriptionRepository.findAll();
+    }
+
+    public List<PrescriptionModel> getByPatientID(Long patientID) {
+
+        return prescriptionRepository.findByPatient_PatientID(patientID);
+    }
 
     public GlobalStatus addPrescription(PrescriptionDTO prescriptionDTO) {
 
@@ -42,7 +50,7 @@ public class PrescriptionService {
                 .orElseThrow();
 
         MedicineModel medicine = medicineRepository
-                .findById(prescriptionDTO.getMedicineID())
+                .findByMedicineID(prescriptionDTO.getMedicineID())
                 .orElseThrow();
 
         PrescriptionModel prescription = new PrescriptionModel(

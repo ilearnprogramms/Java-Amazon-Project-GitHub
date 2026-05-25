@@ -30,7 +30,7 @@ public class SecurityConfiguration {
                 .csrf(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests(requests
                         -> requests
-                        .requestMatchers("/api/patient/mymeds")
+                        .requestMatchers("/api/prescription/mymeds")
                         .hasAnyRole("PATIENT") // access to only own infos as patient
 
                         .anyRequest().hasRole("DOCTOR") // access to everything if it's a doctor

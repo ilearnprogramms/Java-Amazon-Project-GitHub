@@ -15,14 +15,14 @@ public class PrescriptionModel {
     private LocalDate prescribedDate;
 
     @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "patient_id")
     private PatientModel patient;
+
     @ManyToOne(fetch = FetchType.LAZY)
     private DoctorModel doctor;
+
     @ManyToOne(fetch = FetchType.LAZY)
     private MedicineModel medicine;
-
-    public PrescriptionModel() {
-    }
 
     public PrescriptionModel(String description, LocalDate prescribedDate,
             PatientModel patient,
@@ -34,6 +34,9 @@ public class PrescriptionModel {
         this.patient = patient;
         this.doctor = doctor;
         this.medicine = medicine;
+    }
+
+    public PrescriptionModel() {
     }
 
     public Long getId() {

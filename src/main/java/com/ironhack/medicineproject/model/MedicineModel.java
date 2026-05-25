@@ -16,7 +16,6 @@ public class MedicineModel {
     private Long medicineID;
 
     private String medicineName;
-
     private Integer medicineQuantity;
 
 
@@ -81,4 +80,6 @@ public class MedicineModel {
                 ", medicineCategory='" + medicineCategory + '\'' +
                 '}';
     }
+
+
 }

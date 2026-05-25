@@ -26,7 +26,8 @@ public class PatientModel {
     @JsonIgnore
     private List<PrescriptionModel> prescriptions;
 
-    public PatientModel(String username, String password, PatientTitles patientTitle, String patientLastName) {
+    public PatientModel(Long PatientID, String username, String password, PatientTitles patientTitle, String patientLastName) {
+        this.patientID = PatientID;
         this.username = username;
         this.password = password;
         this.patientTitle = patientTitle;

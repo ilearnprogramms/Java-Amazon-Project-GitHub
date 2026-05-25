@@ -2,13 +2,12 @@ package com.ironhack.medicineproject.repository;
 
 import com.ironhack.medicineproject.model.PatientModel;
 import org.springframework.data.jpa.repository.JpaRepository;
-
-import java.util.List;
+import org.springframework.stereotype.Repository;
 import java.util.Optional;
 
+@Repository
 public interface PatientRepository extends JpaRepository <PatientModel,Long> {
 
     PatientModel findByUsernameIgnoreCase(String username);
-    Optional<PatientModel> findByPatientLastNameIgnoreCase(String patientLastName);
 
 }
