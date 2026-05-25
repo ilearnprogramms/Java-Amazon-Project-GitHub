@@ -1,9 +1,13 @@
-package com.ironhack.medicineproject.medicines;
+package com.ironhack.medicineproject.service;
 
-import com.ironhack.medicineproject.security.GlobalStatus;
+import com.ironhack.medicineproject.dto.MedicineDTO;
+import com.ironhack.medicineproject.model.MedicineModel;
+import com.ironhack.medicineproject.repository.MedicineRepository;
+import com.ironhack.medicineproject.enums.GlobalStatus;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.Collections;
 import java.util.List;
 
 @Service
@@ -30,6 +34,19 @@ public class MedicineService {
             medicineRepository.save(medicine);
 
         return GlobalStatus.MEDICINE_CREATED;
+    }
+
+    public GlobalStatus deleteMedicine(MedicineDTO medicineDTO){
+
+        final List<MedicineModel> findByMedicineName
+                = Collections.singletonList(medicineRepository
+                .deleteByMedicineName(medicineDTO.getMedicineName()));
+
+        if (findByMedicineName.isEmpty())
+            return GlobalStatus.MEDICINE_NOT_FOUND;
+        MedicineModel medicine = findByMedicineName.get(0);
+        medicineRepository.delete(medicine);
+        return GlobalStatus.MEDICINE_DELETED;
     }
 
 }

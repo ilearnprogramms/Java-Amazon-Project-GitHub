@@ -1,7 +1,7 @@
-package com.ironhack.medicineproject.doctors;
+package com.ironhack.medicineproject.model;
 
-import com.ironhack.medicineproject.prescription.PrescriptionModel;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.ironhack.medicineproject.enums.DoctorateTitles;
 import jakarta.persistence.*;
 
 import java.util.List;

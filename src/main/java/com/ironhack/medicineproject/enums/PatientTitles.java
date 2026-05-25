@@ -1,4 +1,4 @@
-package com.ironhack.medicineproject.patients;
+package com.ironhack.medicineproject.enums;
 
 public enum PatientTitles {
 

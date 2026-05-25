@@ -1,4 +1,4 @@
-package com.ironhack.medicineproject.security;
+package com.ironhack.medicineproject.enums;
 
 public enum GlobalStatus {
 
@@ -26,5 +26,7 @@ public enum GlobalStatus {
     PATIENT_DELETED,
     MEDICINE_DELETED,
     PRESCRIPTION_DELETED,
+
+    PRESCRIPTION_CAN_NOT_BE_EMPTY
 
 }

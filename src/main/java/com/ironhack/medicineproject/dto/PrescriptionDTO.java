@@ -1,5 +1,5 @@
 
-package com.ironhack.medicineproject.prescription;
+package com.ironhack.medicineproject.dto;
 
 import java.time.LocalDate;
 import java.util.LinkedHashMap;
@@ -41,6 +41,9 @@ public class PrescriptionDTO {
         this.medicineID = medicineID;
         this.description = description;
         this.prescribedDate = prescribedDate;
+    }
+
+    public PrescriptionDTO() {
     }
 
     @JsonProperty("doctorID")

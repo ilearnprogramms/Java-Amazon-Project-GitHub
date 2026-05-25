@@ -1,9 +1,13 @@
-package com.ironhack.medicineproject.doctors;
+package com.ironhack.medicineproject.service;
 
-import com.ironhack.medicineproject.security.GlobalStatus;
+import com.ironhack.medicineproject.dto.DoctorDTO;
+import com.ironhack.medicineproject.model.DoctorModel;
+import com.ironhack.medicineproject.repository.DoctorRepository;
+import com.ironhack.medicineproject.enums.GlobalStatus;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.Collections;
 import java.util.List;
 
 @Service
@@ -35,14 +39,14 @@ public class DoctorService {
 
     public GlobalStatus deleteDoctor(DoctorDTO doctorDTO){
 
-        final List<DoctorModel> findByUsername = doctorRepository
-                .findByUsernameIgnoreCase(doctorDTO.getUsername());
+        final List<DoctorModel> findByUsername
+                = Collections.singletonList(doctorRepository
+                .findByUsernameIgnoreCase(doctorDTO.getUsername()));
         if (findByUsername.isEmpty())
             return GlobalStatus.DOCTOR_NOT_FOUND;
         DoctorModel doctor = findByUsername.get(0);
         doctorRepository.delete(doctor);
         return GlobalStatus.DOCTOR_DELETED;
-
     }
 
 }

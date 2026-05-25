@@ -1,5 +1,5 @@
 
-package com.ironhack.medicineproject.medicines;
+package com.ironhack.medicineproject.dto;
 
 import java.util.LinkedHashMap;
 import java.util.Map;
@@ -9,11 +9,13 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
+import com.ironhack.medicineproject.enums.MedicineCategory;
 
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @JsonPropertyOrder({
     "medicineName",
-    "medicineCategory"
+    "medicineCategory",
+    "medicineQuantity"
 })
 
 public class MedicineDTO {
@@ -22,8 +24,13 @@ public class MedicineDTO {
     private String medicineName;
     @JsonProperty("medicineCategory")
     private MedicineCategory medicineCategory;
+    @JsonProperty("medicineQuantity")
+    private Integer medicineQuantity;
     @JsonIgnore
     private Map<String, Object> additionalProperties = new LinkedHashMap<String, Object>();
+
+    public MedicineDTO() {
+    }
 
     @JsonProperty("medicineName")
     public String getMedicineName() {
@@ -35,9 +42,20 @@ public class MedicineDTO {
         this.medicineName = medicineName;
     }
 
-    public MedicineDTO(String medicineName, MedicineCategory medicineCategory){
+    @JsonProperty("medicineQuantity")
+    public Integer getMedicineQuantity() {
+        return medicineQuantity;
+    }
+
+    @JsonProperty("medicineQuantity")
+    public void setMedicineQuantity(Integer medicineQuantity) {
+        this.medicineQuantity = medicineQuantity;
+    }
+
+    public MedicineDTO(String medicineName, MedicineCategory medicineCategory, Integer medicineQuantity) {
         this.medicineName = medicineName;
         this.medicineCategory = medicineCategory;
+        this.medicineQuantity = medicineQuantity;
     }
 
     @JsonProperty("medicineCategory")
@@ -58,30 +76,6 @@ public class MedicineDTO {
     @JsonAnySetter
     public void setAdditionalProperty(String name, Object value) {
         this.additionalProperties.put(name, value);
-    }
-
-    @Override
-    public String toString() {
-        StringBuilder sb = new StringBuilder();
-        sb.append(MedicineDTO.class.getName()).append('@').append(Integer.toHexString(System.identityHashCode(this))).append('[');
-        sb.append("medicineName");
-        sb.append('=');
-        sb.append(((this.medicineName == null)?"<null>":this.medicineName));
-        sb.append(',');
-        sb.append("medicineCategory");
-        sb.append('=');
-        sb.append(((this.medicineCategory == null)?"<null>":this.medicineCategory));
-        sb.append(',');
-        sb.append("additionalProperties");
-        sb.append('=');
-        sb.append(((this.additionalProperties == null)?"<null>":this.additionalProperties));
-        sb.append(',');
-        if (sb.charAt((sb.length()- 1)) == ',') {
-            sb.setCharAt((sb.length()- 1), ']');
-        } else {
-            sb.append(']');
-        }
-        return sb.toString();
     }
 
 }

@@ -1,6 +1,8 @@
-package com.ironhack.medicineproject.doctors;
+package com.ironhack.medicineproject.controller;
 
-import com.ironhack.medicineproject.security.GlobalStatus;
+import com.ironhack.medicineproject.dto.DoctorDTO;
+import com.ironhack.medicineproject.service.DoctorService;
+import com.ironhack.medicineproject.enums.GlobalStatus;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -11,7 +13,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/doctor")
+@RequestMapping("/api")
 public class DoctorController {
 
     @Autowired
@@ -44,7 +46,7 @@ public class DoctorController {
         return ResponseEntity.status(HttpStatus.OK).body(doctorDTOs);
     }
 
-    @PostMapping("/newdoctor")
+    @PostMapping("/doctor")
     public ResponseEntity addNewDoctor(@RequestBody DoctorDTO doctorDTO) {
 
         GlobalStatus status = doctorService.addNewDoctor(doctorDTO);
@@ -58,6 +60,20 @@ public class DoctorController {
         return
                 ResponseEntity.status(HttpStatus.CREATED).body(doctorDTO);
         // TODO ADD MORE ERROR HANDLING
+    }
+
+    @DeleteMapping("/doctor")
+    public ResponseEntity deleteDoctor(@RequestBody DoctorDTO doctorDTO) {
+
+        GlobalStatus status = doctorService.deleteDoctor(doctorDTO);
+
+        if (status.equals(GlobalStatus.DOCTOR_NOT_FOUND))
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Doctor not found");
+
+        if (status.equals(GlobalStatus.DOCTOR_DELETED))
+            return ResponseEntity.status(HttpStatus.OK).body("Doctor deleted");
+        return
+                ResponseEntity.status(HttpStatus.OK).body("Doctor deleted");
     }
 
 }

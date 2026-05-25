@@ -1,4 +1,4 @@
-package com.ironhack.medicineproject.medicines;
+package com.ironhack.medicineproject.enums;
 
 public enum MedicineCategory {
 

@@ -1,6 +1,9 @@
-package com.ironhack.medicineproject.patients;
+package com.ironhack.medicineproject.controller;
 
-import com.ironhack.medicineproject.security.GlobalStatus;
+import com.ironhack.medicineproject.dto.DoctorDTO;
+import com.ironhack.medicineproject.dto.PatientDTO;
+import com.ironhack.medicineproject.service.PatientService;
+import com.ironhack.medicineproject.enums.GlobalStatus;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -9,13 +12,13 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/patient")
+@RequestMapping("/api")
 public class PatientController {
 
     @Autowired
-    private PatientService  patientService;
+    private PatientService patientService;
 
-    @GetMapping("/patients")
+    @GetMapping("/patient")
     public ResponseEntity getAllPatients(){
 
         List<PatientDTO> patientDTOs = patientService.getAllPatients()
@@ -31,7 +34,7 @@ public class PatientController {
         return ResponseEntity.status(HttpStatus.OK).body(patientDTOs);
     }
 
-    @PostMapping("/newpatient")
+    @PostMapping("/patient")
     public ResponseEntity addNewPatient(@RequestBody PatientDTO patientDTO){
 
         GlobalStatus status = patientService.addNewPatient(patientDTO);
@@ -44,7 +47,20 @@ public class PatientController {
                     ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Patient Name is too long");
         return
                 ResponseEntity.status(HttpStatus.CREATED).body(patientDTO);
-        // TODO ADD MORE ERROR HANDLING
+    }
+
+    @DeleteMapping("/patient")
+    public ResponseEntity deletePatient(@RequestBody PatientDTO patientDTO) {
+
+        GlobalStatus status = patientService.deletePatient(patientDTO);
+
+        if (status.equals(GlobalStatus.PATIENT_NOT_FOUND))
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Patient not found");
+
+        if (status.equals(GlobalStatus.PATIENT_DELETED))
+            return ResponseEntity.status(HttpStatus.OK).body("Patient deleted");
+        return
+                ResponseEntity.status(HttpStatus.OK).body(patientDTO);
     }
 
 

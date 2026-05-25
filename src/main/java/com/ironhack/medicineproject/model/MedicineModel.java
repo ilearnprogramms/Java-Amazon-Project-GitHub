@@ -1,8 +1,8 @@
-package com.ironhack.medicineproject.medicines;
+package com.ironhack.medicineproject.model;
 
 
-import com.ironhack.medicineproject.prescription.PrescriptionModel;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.ironhack.medicineproject.enums.MedicineCategory;
 import jakarta.persistence.*;
 
 import java.util.List;
@@ -17,6 +17,9 @@ public class MedicineModel {
 
     private String medicineName;
 
+    private Integer medicineQuantity;
+
+
     @Enumerated(EnumType.STRING)
     private MedicineCategory medicineCategory;
 
@@ -24,9 +27,10 @@ public class MedicineModel {
     @JsonIgnore
     private List<PrescriptionModel> prescriptions;
 
-    public MedicineModel(String medicineName, MedicineCategory medicineCategory) {
+    public MedicineModel(String medicineName, MedicineCategory medicineCategory, Integer medicineQuantity) {
         this.medicineName = medicineName;
         this.medicineCategory = medicineCategory;
+        this.medicineQuantity = medicineQuantity;
     }
 
     public MedicineModel() {
@@ -39,6 +43,18 @@ public class MedicineModel {
 
     public List<PrescriptionModel> getPrescriptions() {
         return prescriptions;
+    }
+
+    public void setMedicineID(Long medicineID) {
+        this.medicineID = medicineID;
+    }
+
+    public Integer getMedicineQuantity() {
+        return medicineQuantity;
+    }
+
+    public void setMedicineQuantity(Integer medicineQuantity) {
+        this.medicineQuantity = medicineQuantity;
     }
 
     public String getMedicineName() {

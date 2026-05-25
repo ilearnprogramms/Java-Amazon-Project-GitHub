@@ -1,4 +1,4 @@
-package com.ironhack.medicineproject.doctors;
+package com.ironhack.medicineproject.enums;
 
 public enum DoctorateTitles {
 

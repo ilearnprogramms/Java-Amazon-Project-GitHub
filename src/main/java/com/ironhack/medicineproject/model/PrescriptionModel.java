@@ -1,8 +1,5 @@
-package com.ironhack.medicineproject.prescription;
+package com.ironhack.medicineproject.model;
 
-import com.ironhack.medicineproject.doctors.DoctorModel;
-import com.ironhack.medicineproject.medicines.MedicineModel;
-import com.ironhack.medicineproject.patients.PatientModel;
 import jakarta.persistence.*;
 import java.time.LocalDate;
 
@@ -24,15 +21,19 @@ public class PrescriptionModel {
     @ManyToOne(fetch = FetchType.LAZY)
     private MedicineModel medicine;
 
-    public PrescriptionModel(String description, LocalDate prescribedDate, PatientModel patient, DoctorModel doctor, MedicineModel medicine) {
+    public PrescriptionModel() {
+    }
+
+    public PrescriptionModel(String description, LocalDate prescribedDate,
+            PatientModel patient,
+            DoctorModel doctor,
+            MedicineModel medicine) {
+
         this.description = description;
         this.prescribedDate = prescribedDate;
         this.patient = patient;
         this.doctor = doctor;
         this.medicine = medicine;
-    }
-
-    public PrescriptionModel() {
     }
 
     public Long getId() {
