@@ -12,6 +12,8 @@ The Medicine Planning System is a Java-based application designed for hospitals,
 
 \- Login username
 
+\- Password
+
 \- Doctor ID    (Unique / Auto generated)
 
 \- Lastname     (Dr. XXXX)
@@ -19,6 +21,8 @@ The Medicine Planning System is a Java-based application designed for hospitals,
 ###### Patients ( User )
 
 \- Login username
+
+\- Password
 
 \- Patient ID   (Unique / Auto generated)
 
@@ -31,6 +35,16 @@ The Medicine Planning System is a Java-based application designed for hospitals,
 \- Medicine Name
 
 \- Medicine Instruction
+
+###### Prescription ( Objects )
+
+\- Prescription ID  (Unique / Auto generated)
+
+\- Related -> doctorID, patientID, medicineID
+
+\- Information
+
+\- Date
 
 
 ### ABSTRACT
@@ -64,7 +78,7 @@ The Medicine Planning System is a simple Java-based application designed for hos
 
 | Field            | Value                                           |
 | ---------------- | ----------------------------------------------- |
-| Endpoint         | `POST /auth/login`                              |
+| Endpoint         | `POST /api/login`                              |
 | Authorization    | None                                            |
 | Description      | Logs in a doctor or patient                     |
 | Data In          | `{ "username": "", "password": "" }`            |
@@ -75,7 +89,7 @@ The Medicine Planning System is a simple Java-based application designed for hos
 
 | Field            | Value                                    |
 | ---------------- | ---------------------------------------- |
-| Endpoint         | `GET /patients/{patientId}`              |
+| Endpoint         | `GET /patient/{patientId}`               |
 | Authorization    | Doctor Token                             |
 | Description      | Returns patient information              |
 | Data In          | None                                     |
@@ -88,7 +102,7 @@ The Medicine Planning System is a simple Java-based application designed for hos
 
 | Field            | Value                                   |
 | ---------------- | --------------------------------------- |
-| Endpoint         | `POST /patients`                        |
+| Endpoint         | `POST /patient`                         |
 | Authorization    | Doctor Token                            |
 | Description      | Creates a new patient                   |
 | Data In          | `{ userName, lastName }`                |
@@ -100,7 +114,7 @@ The Medicine Planning System is a simple Java-based application designed for hos
 
 | Field            | Value                               |
 | ---------------- | ----------------------------------- |
-| Endpoint         | `DELETE /patients/{patientId}`      |
+| Endpoint         | `DELETE /patient/{patientId}`       |
 | Authorization    | Doctor Token                        |
 | Description      | Deletes a patient                   |
 | Data In          | None                                |
@@ -139,7 +153,7 @@ The Medicine Planning System is a simple Java-based application designed for hos
 | Endpoint         | `PUT /patients/{patientId}/medicines`           |
 | Authorization    | Doctor Token                                    |
 | Description      | Assigns medicine to patient                     |
-| Data In          | `{ medicineId, instruction }`                   |
+| Data In          | `{ medicineId, patientId }`                     |
 | Success Response | `200 OK - Medicine assigned`                    |
 | Error Response   | `404 Not Found - Patient or medicine not found` |
 | Error Response   | `403 Forbidden - Access denied`                 |
@@ -153,10 +167,22 @@ The Medicine Planning System is a simple Java-based application designed for hos
 | Description      | Returns logged-in patient medicines |
 | Data In          | None                                |
 | Success Response | `200 OK`                            |
-| Data Out         | `\[ { medicineName, instruction } ]` |
+| Data Out         | `\[ { medicineName, instruction } ]`|
 | Error Response   | `403 Forbidden - Access denied`     |
 
-\# 9. Unauthorized Access (Global)
+\# 9. Assign Presciption To Patient (Doctor Only)
+
+| Field            | Value                                           |
+| ---------------- | ----------------------------------------------- |
+| Endpoint         | `PUT /prescription/{patientId}`                 |
+| Authorization    | Doctor Token                                    |
+| Description      | Assigns insctructions for patient's medicine    |
+| Data In          | `{ medicineId, patientId, instruction[] }`      |
+| Success Response | `200 OK - Presciption assigned`                 |
+| Error Response   | `404 Not Found - Patient or medicine not found` |
+| Error Response   | `403 Forbidden - Access denied`                 |
+
+\# 10. Unauthorized Access (Global)
 
 | Field            | Value                                        |
 | ---------------- | -------------------------------------------- |
