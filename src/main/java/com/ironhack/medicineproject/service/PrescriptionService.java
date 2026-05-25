@@ -14,7 +14,9 @@ import com.ironhack.medicineproject.repository.MedicineRepository;
 import com.ironhack.medicineproject.repository.PatientRepository;
 import com.ironhack.medicineproject.repository.PrescriptionRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
+@Service
 public class PrescriptionService {
 
     @Autowired
@@ -26,21 +28,21 @@ public class PrescriptionService {
     @Autowired
     DoctorRepository doctorRepository;
 
-    public GlobalStatus addPrescription(PrescriptionDTO prescriptionDTO, DoctorDTO doctorDTO, PatientDTO patientDTO, MedicineDTO medicineDTO) {
+    public GlobalStatus addPrescription(PrescriptionDTO prescriptionDTO) {
 
         if(prescriptionDTO.getDescription().isEmpty())
             return GlobalStatus.PRESCRIPTION_CAN_NOT_BE_EMPTY;
 
         DoctorModel doctor = doctorRepository
-                .findByDrLastName(doctorDTO.getDrLastName())
+                .findById(prescriptionDTO.getDoctorID())
                 .orElseThrow();
 
         PatientModel patient = patientRepository
-                .findByPatientLastNameIgnoreCase(patientDTO.getPatientLastName())
+                .findById(prescriptionDTO.getPatientID())
                 .orElseThrow();
 
         MedicineModel medicine = medicineRepository
-                .findByMedicineName(medicineDTO.getMedicineName())
+                .findById(prescriptionDTO.getMedicineID())
                 .orElseThrow();
 
         PrescriptionModel prescription = new PrescriptionModel(

@@ -8,6 +8,5 @@ import java.util.Optional;
 
 public interface DoctorRepository extends JpaRepository <DoctorModel, Long> {
 
-    Optional<DoctorModel> findByDrLastName(String drLastName);
     DoctorModel findByUsernameIgnoreCase(String username);
 }
