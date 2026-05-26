@@ -65,9 +65,9 @@ public class PrescriptionController {
         return ResponseEntity.ok(status);
     }
 
-    //  TODO THIS THING IS NOT WORKING LMAOOOOOOOOOOOOOOOOOO CHECK NULL ERRORS
     @DeleteMapping("/prescription")
-    public ResponseEntity deletePrescription(PrescriptionDTO prescriptionDTO) {
+    public ResponseEntity deletePrescription(
+            @RequestBody PrescriptionDTO prescriptionDTO) {
 
         GlobalStatus status = prescriptionService.deletePrescription(prescriptionDTO);
 
@@ -77,7 +77,5 @@ public class PrescriptionController {
         return
                 ResponseEntity.status(HttpStatus.OK).body("Prescription deleted");
     }
-
-
 
 }
