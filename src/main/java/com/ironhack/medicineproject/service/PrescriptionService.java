@@ -38,7 +38,7 @@ public class PrescriptionService {
 
     public GlobalStatus addPrescription(PrescriptionDTO prescriptionDTO) {
 
-        if(prescriptionDTO.getDescription().isEmpty())
+        if(prescriptionDTO.getDescription().isBlank()) ///  OR isEmpty() ?
             return GlobalStatus.PRESCRIPTION_CAN_NOT_BE_EMPTY;
 
         DoctorModel doctor = doctorRepository
@@ -64,6 +64,25 @@ public class PrescriptionService {
 
         return GlobalStatus.PRESCRIPTION_CREATED;
     }
+
+    ///  TODO TEST THIS METHOD
+    /*
+    public GlobalStatus addPrescription(PrescriptionDTO dto) {
+
+    if (dto.getDescription().isBlank())
+        return GlobalStatus.PRESCRIPTION_CAN_NOT_BE_EMPTY;
+
+    prescriptionRepository.save(new PrescriptionModel(
+            dto.getDescription(),
+            dto.getPrescribedDate(),
+            patientRepository.findById(dto.getPatientID()).orElseThrow(),
+            doctorRepository.findById(dto.getDoctorID()).orElseThrow(),
+            medicineRepository.findByMedicineID(dto.getMedicineID()).orElseThrow()
+    ));
+
+    return GlobalStatus.PRESCRIPTION_CREATED;
+}
+     */
 
     public GlobalStatus deletePrescription(PrescriptionDTO prescriptionDTO) {
 
