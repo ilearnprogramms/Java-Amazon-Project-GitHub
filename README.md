@@ -73,123 +73,186 @@ The Medicine Planning System is a simple Java-based application designed for hos
 
 ### API Documentation
 
+## 1. Unauthorized Access
 
-\# 1. Unauthorized Access (Global)
+| Field | Value |
+|---|---|
+| **Endpoint** | `ANY` |
+| **Authorization** | Invalid/Missing Token |
+| **Description** | Handles unauthorized API access |
+| **Data In** | `{ "username": "", "password": "" }` |
+| **Success Response** | `200 OK` |
+| **Error Response** | `401 Unauthorized` |
 
-| Field            | Value                                           |
-| ---------------- | ----------------------------------------------- |
-| Endpoint         | `ANY`                                           |
-| Authorization    | Invalid or Missing Token                        |
-| Description      | Handles unauthorized API access                 |
-| Data In          | `{ "username": "", "password": "" }`            |
-| Success Response | `200 OK - Token returned`                       |
-| Error Response   | `401 Unauthorized - Wrong username or password` |
+---
 
-\# 2. Get Patient Data (Doctor Only)
+## 2. Get Doctor Data
 
-| Field            | Value                                    |
-| ---------------- | ---------------------------------------- |
-| Endpoint         | `GET /patients`                          |
-| Authorization    | Doctor Token                             |
-| Description      | Returns patient information              |
-| Data In          | None                                     |
-| Success Response | `200 OK`                                 |
-| Data Out         | `{ patientId, lastName, medicines\[] }`  |
-| Error Response   | `403 Forbidden - Access denied`          |
-| Error Response   | `404 Not Found - Patient does not exist` |
+| Field | Value |
+|---|---|
+| **Endpoint** | `GET /doctors` |
+| **Authorization** | Doctor |
+| **Description** | Returns doctor information |
+| **Data In** | `None` |
+| **Data Out** | `{ doctorateTitle, userName, lastName, password }` |
+| **Success Response** | `200 OK` |
+| **Error Response** | `403 Forbidden` |
+| **Error Response** | `404 Not Found` |
 
-\# 3. Add Patient (Doctor Only)
+---
 
-| Field            | Value                                   |
-| ---------------- | --------------------------------------- |
-| Endpoint         | `POST /patient`                         |
-| Authorization    | Doctor Token                            |
-| Description      | Creates a new patient                   |
-| Data In          | `{ userName, lastName, password }`      |
-| Success Response | `201 Created - Patient added`           |
-| Error Response   | `403 Forbidden - Access denied`         |
-| Error Response   | `409 Conflict - Patient already exists` |
+## 3. Add Doctor
 
-\# 4. Delete Patient (Doctor Only)
+| Field | Value |
+|---|---|
+| **Endpoint** | `POST /doctor` |
+| **Authorization** | Doctor |
+| **Description** | Creates a new doctor |
+| **Data In** | `{ doctorateTitle, userName, lastName, password }` |
+| **Success Response** | `201 Created` |
+| **Error Response** | `403 Forbidden` |
+| **Error Response** | `409 Conflict` |
 
-| Field            | Value                               |
-| ---------------- | ----------------------------------- |
-| Endpoint         | `DELETE /patient`                   |
-| Authorization    | Doctor Token                        |
-| Description      | Deletes a patient                   |
-| Data In          | `{ userName }`                      |
-| Success Response | `200 OK - Patient deleted`          |
-| Error Response   | `404 Not Found - Patient not found` |
-| Error Response   | `403 Forbidden - Access denied`     |
+---
 
-\# 5. Add Medicine (Doctor Only)
+## 4. Delete Doctor
 
-| Field            | Value                                     |
-| ---------------- | ----------------------------------------- |
-| Endpoint         | `POST /medicines`                         |
-| Authorization    | Doctor Token                              |
-| Description      | Adds a medicine to the system             |
-| Data In          | `{ medicineName, medicineQuantity, type }`|
-| Success Response | `200 OK - Medicine added`                 |
-| Error Response   | `403 Forbidden - Access denied`           |
-| Error Response   | `409 Conflict - Medicine already exists`  |
+| Field | Value |
+|---|---|
+| **Endpoint** | `DELETE /doctor` |
+| **Authorization** | Doctor |
+| **Description** | Deletes a doctor |
+| **Data In** | `{ userName }` |
+| **Success Response** | `200 OK` |
+| **Error Response** | `404 Not Found` |
+| **Error Response** | `403 Forbidden` |
 
-\# 6. Delete Medicine (Doctor Only)
+---
 
-| Field            | Value                                         |
-| ---------------- | --------------------------------------------- |
-| Endpoint         | `DELETE /medicines`                           |
-| Authorization    | Doctor Token                                  |
-| Description      | Deletes a medicine                            |
-| Data In          | `{ medicineName}`                             |
-| Success Response | `200 OK - Medicine deleted`                   |
-| Error Response   | `403 Forbidden - Access denied`               |
-| Error Response   | `409 Conflict - Medicine assigned to patient` |
+## 5. Get Patient Data
 
-\# 7. Assign Medicine To Patient (Doctor Only)
+| Field | Value |
+|---|---|
+| **Endpoint** | `GET /patients` |
+| **Authorization** | Doctor |
+| **Description** | Returns patient information |
+| **Data In** | `None` |
+| **Data Out** | `{ patientTitle, userName, lastName, password }` |
+| **Success Response** | `200 OK` |
+| **Error Response** | `403 Forbidden` |
+| **Error Response** | `404 Not Found` |
 
-| Field            | Value                                           |
-| ---------------- | ----------------------------------------------- |
-| Endpoint         | `PUT /patients/{patientId}/medicines`           |
-| Authorization    | Doctor Token                                    |
-| Description      | Assigns medicine to patient                     |
-| Data In          | `{ medicineId, patientId }`                     |
-| Success Response | `200 OK - Medicine assigned`                    |
-| Error Response   | `404 Not Found - Patient or medicine not found` |
-| Error Response   | `403 Forbidden - Access denied`                 |
+---
 
-\# 8. Patient Views Own Medicines (Patient Only)
+## 6. Add Patient
 
-| Field            | Value                                        |
-| ---------------- | -------------------------------------------- |
-| Endpoint         | `GET /presctiptions/mymeds`                  |
-| Authorization    | Patient Token                                |
-| Description      | Returns logged-in patient medicines          |
-| Data In          | None                                         |
-| Success Response | `200 OK`                                     |
-| Data Out         | `\[ { medicine, doctorName, instruction } ]` |
-| Error Response   | `403 Forbidden - Access denied`              |
+| Field | Value |
+|---|---|
+| **Endpoint** | `POST /patient` |
+| **Authorization** | Doctor |
+| **Description** | Creates a new patient |
+| **Data In** | `{ patientTitle, userName, lastName, password }` |
+| **Success Response** | `201 Created` |
+| **Error Response** | `403 Forbidden` |
+| **Error Response** | `409 Conflict` |
 
-\# 9. Assign Presciption To Patient (Doctor Only)
+---
 
-| Field            | Value                                           |
-| ---------------- | ----------------------------------------------- |
-| Endpoint         | `PUT /prescription/{patientId}`                 |
-| Authorization    | Doctor Token                                    |
-| Description      | Assigns insctructions for patient's medicine    |
-| Data In          | `{ medicineId, patientId, instruction[] }`      |
-| Success Response | `200 OK - Presciption assigned`                 |
-| Error Response   | `404 Not Found - Patient or medicine not found` |
-| Error Response   | `403 Forbidden - Access denied`                 |
+## 7. Delete Patient
 
-\# 10. Delete Presciption From Patient (Doctor Only)
+| Field | Value |
+|---|---|
+| **Endpoint** | `DELETE /patient` |
+| **Authorization** | Doctor |
+| **Description** | Deletes a patient |
+| **Data In** | `{ userName }` |
+| **Success Response** | `200 OK` |
+| **Error Response** | `404 Not Found` |
+| **Error Response** | `403 Forbidden` |
 
-| Field            | Value                                           |
-| ---------------- | ----------------------------------------------- |
-| Endpoint         | `DELETE /prescription/{patientId}`              |
-| Authorization    | Doctor Token                                    |
-| Description      | Deletes insctructions for patient's medicine    |
-| Data In          | `{ prescriptionID }`                            |
-| Success Response | `200 OK - Presciption removed`                  |
-| Error Response   | `404 Not Found - Patient or medicine not found` |
-| Error Response   | `403 Forbidden - Access denied`                 |
+---
+
+## 8. Get Medicine Data
+
+| Field | Value |
+|---|---|
+| **Endpoint** | `GET /medicines` |
+| **Authorization** | Doctor |
+| **Description** | Returns medicine information |
+| **Data In** | `None` |
+| **Data Out** | `{ medicineName, medicineQuantity, type(HUMAN or VETERINARY) }` |
+| **Success Response** | `200 OK` |
+| **Error Response** | `404 Not Found` |
+| **Error Response** | `403 Forbidden` |
+
+---
+
+## 9. Add Medicine
+
+| Field | Value |
+|---|---|
+| **Endpoint** | `POST /medicine` |
+| **Authorization** | Doctor |
+| **Description** | Adds a new medicine |
+| **Data In** | `{ medicineName, medicineQuantity, type(HUMAN or VETERINARY) }` |
+| **Success Response** | `201 Created` |
+| **Error Response** | `403 Forbidden` |
+| **Error Response** | `409 Conflict` |
+
+---
+
+## 10. Delete Medicine
+
+| Field | Value |
+|---|---|
+| **Endpoint** | `DELETE /medicine` |
+| **Authorization** | Doctor |
+| **Description** | Deletes a medicine |
+| **Data In** | `{ medicineName }` |
+| **Success Response** | `200 OK` |
+| **Error Response** | `403 Forbidden` |
+| **Error Response** | `409 Conflict` |
+
+---
+
+## 11. Assign Prescription
+
+| Field | Value |
+|---|---|
+| **Endpoint** | `POST /prescription/{patientID}` |
+| **Authorization** | Doctor |
+| **Description** | Assigns prescription to patient |
+| **Data In** | `{ doctorId, medicineId, patientId, instruction[], date }` |
+| **Success Response** | `201 Created` |
+| **Error Response** | `404 Not Found` |
+| **Error Response** | `403 Forbidden` |
+
+---
+
+## 12. Delete Prescription
+
+| Field | Value |
+|---|---|
+| **Endpoint** | `DELETE /prescription` |
+| **Authorization** | Doctor |
+| **Description** | Deletes a prescription |
+| **Data In** | `{ prescriptionID }` |
+| **Success Response** | `200 OK` |
+| **Error Response** | `404 Not Found` |
+| **Error Response** | `403 Forbidden` |
+
+---
+
+## 13. View Own Medicines
+
+| Field | Value |
+|---|---|
+| **Endpoint** | `GET /prescription/mymeds` |
+| **Authorization** | Patient |
+| **Description** | Returns logged-in patient medicines |
+| **Data In** | `None` |
+| **Data Out** | `{ doctorId, medicineId, patientId, instruction[], date }` |
+| **Success Response** | `200 OK` |
+| **Error Response** | `403 Forbidden` |
+
+
