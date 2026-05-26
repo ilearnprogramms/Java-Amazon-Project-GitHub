@@ -9,6 +9,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.logging.Logger;
 
 @RestController
 @RequestMapping("/api")
@@ -19,6 +20,9 @@ public class PatientController {
 
     @GetMapping("/patients")
     public ResponseEntity getAllPatients(){
+
+        Logger patientLogger = Logger.getLogger("PatientController");
+        patientLogger.info("Getting all Patients");
 
         List<PatientDTO> patientDTOs = patientService.getAllPatients()
                 .stream()
@@ -36,6 +40,9 @@ public class PatientController {
     @PostMapping("/patient")
     public ResponseEntity addNewPatient(@RequestBody PatientDTO patientDTO){
 
+        Logger patientLogger = Logger.getLogger("PatientController");
+        patientLogger.info("Adding a new Patient");
+
         GlobalStatus status = patientService.addNewPatient(patientDTO);
 
         if (status.equals(GlobalStatus.NAME_TOO_SHORT))
@@ -51,6 +58,9 @@ public class PatientController {
     //  TODO HTTP OK RETURNS NULL FOR PATIENT TITLE AND NAME
     @DeleteMapping("/patient")
     public ResponseEntity deletePatient(@RequestBody PatientDTO patientDTO) {
+
+        Logger patientLogger = Logger.getLogger("PatientController");
+        patientLogger.info("Deleting a Patient");
 
         GlobalStatus status = patientService.deletePatient(patientDTO);
 

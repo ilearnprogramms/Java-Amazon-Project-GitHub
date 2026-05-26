@@ -11,6 +11,7 @@ import org.springframework.security.web.csrf.CsrfToken;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.logging.Logger;
 
 @RestController
 @RequestMapping("/api")
@@ -25,13 +26,16 @@ public class DoctorController {
         return "Welcome to Medicine Project!\n " + request.getSession().getId();
     }
 
-    @GetMapping("/csrf-token")
-    public CsrfToken getCsrfToken(HttpServletRequest request){
-        return (CsrfToken) request.getAttribute("_csrf");
-    }
+//    @GetMapping("/csrf-token")
+//    public CsrfToken getCsrfToken(HttpServletRequest request){
+//        return (CsrfToken) request.getAttribute("_csrf");
+//    }
 
     @GetMapping("/doctors")
     public ResponseEntity getAllDoctors() {
+
+        Logger doctorLogger = Logger.getLogger("DoctorController");
+        doctorLogger.info("Geting all doctors");
 
         List<DoctorDTO> doctorDTOs = doctorService.getAllDoctors()
                 .stream()
@@ -49,6 +53,10 @@ public class DoctorController {
     @PostMapping("/doctor")
     public ResponseEntity addNewDoctor(@RequestBody DoctorDTO doctorDTO) {
 
+        Logger doctorLogger = Logger.getLogger("DoctorController");
+        doctorLogger.info("Adding a new doctor");
+
+
         GlobalStatus status = doctorService.addNewDoctor(doctorDTO);
 
         if (status.equals(GlobalStatus.NAME_TOO_SHORT))
@@ -64,6 +72,9 @@ public class DoctorController {
 
     @DeleteMapping("/doctor")
     public ResponseEntity deleteDoctor(@RequestBody DoctorDTO doctorDTO) {
+
+        Logger doctorLogger = Logger.getLogger("DoctorController");
+        doctorLogger.info("Deleting a doctor");
 
         GlobalStatus status = doctorService.deleteDoctor(doctorDTO);
 

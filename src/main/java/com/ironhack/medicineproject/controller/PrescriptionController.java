@@ -13,6 +13,7 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.logging.Logger;
 
 @RestController
 @RequestMapping("/api")
@@ -23,6 +24,9 @@ public class PrescriptionController {
 
     @GetMapping("/prescriptions")
     public ResponseEntity getAllPrescriptions(){
+
+        Logger prescriptionsLogger = Logger.getLogger("PrescriptionController");
+        prescriptionsLogger.info("Getting all Prescriptions");
 
         List<PrescriptionDTO> prescriptionDTOS = prescriptionService.getAllPrescriptions()
                 .stream()
@@ -39,8 +43,10 @@ public class PrescriptionController {
 
     @PreAuthorize("hasRole('PATIENT')")
     @GetMapping("/prescription/mymeds")
-    public List<PrescriptionModel> getMyPrescriptions(
-            Authentication authentication) {
+    public List<PrescriptionModel> getMyPrescriptions(Authentication authentication) {
+
+        Logger prescriptionsLogger = Logger.getLogger("PrescriptionController");
+        prescriptionsLogger.info("Getting Prescriptions for The Logged in Patient");
 
         CustomUserDetails user =
                 (CustomUserDetails) authentication.getPrincipal();
@@ -57,6 +63,9 @@ public class PrescriptionController {
             @RequestBody PrescriptionDTO prescriptionDTO
     ) {
 
+        Logger prescriptionsLogger = Logger.getLogger("PrescriptionController");
+        prescriptionsLogger.info("Adding a new Prescription");
+
         prescriptionDTO.setPatientID(patientID);
 
         GlobalStatus status =
@@ -68,6 +77,9 @@ public class PrescriptionController {
     @DeleteMapping("/prescription")
     public ResponseEntity deletePrescription(
             @RequestBody PrescriptionDTO prescriptionDTO) {
+
+        Logger prescriptionsLogger = Logger.getLogger("PrescriptionController");
+        prescriptionsLogger.info("Deleting a Prescription");
 
         GlobalStatus status = prescriptionService.deletePrescription(prescriptionDTO);
 

@@ -9,6 +9,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.logging.Logger;
 
 @RestController
 @RequestMapping("/api")
@@ -19,6 +20,9 @@ public class MedicineController {
 
     @GetMapping("/medicines")
     public ResponseEntity getAllMedicines(){
+
+        Logger medicineLogger = Logger.getLogger("MedicineController");
+        medicineLogger.info("Getting all Medicines");
 
         List<MedicineDTO> medicineDTOs = medicineService.getAllMedicines()
                 .stream()
@@ -36,6 +40,9 @@ public class MedicineController {
     @PostMapping("/medicine")
     public ResponseEntity addNewMedicine(@RequestBody MedicineDTO medicineDTO){
 
+        Logger medicineLogger = Logger.getLogger("MedicineController");
+        medicineLogger.info("Posting the following medicine: " +  medicineDTO.getMedicineName());
+
         GlobalStatus status = medicineService.addNewMedicine(medicineDTO);
 
         if (status.equals(GlobalStatus.NAME_TOO_SHORT))
@@ -50,6 +57,9 @@ public class MedicineController {
 
     @DeleteMapping("/medicine")
     public ResponseEntity deleteMedicine(@RequestBody MedicineDTO medicineDTO){
+
+        Logger medicineLogger = Logger.getLogger("MedicineController");
+        medicineLogger.info("Deleting the medicine: " +  medicineDTO.getMedicineName());
 
         GlobalStatus status = medicineService.deleteMedicine(medicineDTO);
 
