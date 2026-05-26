@@ -34,7 +34,7 @@ The Medicine Planning System is a Java-based application designed for hospitals,
 
 \- Medicine Name
 
-\- Medicine Instruction
+\- Medicine Quantity
 
 ###### Prescription ( Objects )
 
@@ -74,13 +74,13 @@ The Medicine Planning System is a simple Java-based application designed for hos
 ### API Documentation
 
 
-\# 1. Login
+\# 1. Unauthorized Access (Global)
 
 | Field            | Value                                           |
 | ---------------- | ----------------------------------------------- |
-| Endpoint         | `POST /api/login`                              |
-| Authorization    | None                                            |
-| Description      | Logs in a doctor or patient                     |
+| Endpoint         | `ANY`                                           |
+| Authorization    | Invalid or Missing Token                        |
+| Description      | Handles unauthorized API access                 |
 | Data In          | `{ "username": "", "password": "" }`            |
 | Success Response | `200 OK - Token returned`                       |
 | Error Response   | `401 Unauthorized - Wrong username or password` |
@@ -89,12 +89,12 @@ The Medicine Planning System is a simple Java-based application designed for hos
 
 | Field            | Value                                    |
 | ---------------- | ---------------------------------------- |
-| Endpoint         | `GET /patient/{patientId}`               |
+| Endpoint         | `GET /patients`                          |
 | Authorization    | Doctor Token                             |
 | Description      | Returns patient information              |
 | Data In          | None                                     |
 | Success Response | `200 OK`                                 |
-| Data Out         | `{ patientId, lastName, medicines\[] }`   |
+| Data Out         | `{ patientId, lastName, medicines\[] }`  |
 | Error Response   | `403 Forbidden - Access denied`          |
 | Error Response   | `404 Not Found - Patient does not exist` |
 
@@ -105,7 +105,7 @@ The Medicine Planning System is a simple Java-based application designed for hos
 | Endpoint         | `POST /patient`                         |
 | Authorization    | Doctor Token                            |
 | Description      | Creates a new patient                   |
-| Data In          | `{ userName, lastName }`                |
+| Data In          | `{ userName, lastName, password }`      |
 | Success Response | `201 Created - Patient added`           |
 | Error Response   | `403 Forbidden - Access denied`         |
 | Error Response   | `409 Conflict - Patient already exists` |
@@ -114,34 +114,34 @@ The Medicine Planning System is a simple Java-based application designed for hos
 
 | Field            | Value                               |
 | ---------------- | ----------------------------------- |
-| Endpoint         | `DELETE /patient/{patientId}`       |
+| Endpoint         | `DELETE /patient`                   |
 | Authorization    | Doctor Token                        |
 | Description      | Deletes a patient                   |
-| Data In          | None                                |
+| Data In          | `{ userName }`                      |
 | Success Response | `200 OK - Patient deleted`          |
 | Error Response   | `404 Not Found - Patient not found` |
 | Error Response   | `403 Forbidden - Access denied`     |
 
 \# 5. Add Medicine (Doctor Only)
 
-| Field            | Value                                    |
-| ---------------- | ---------------------------------------- |
-| Endpoint         | `POST /medicines`                        |
-| Authorization    | Doctor Token                             |
-| Description      | Adds a medicine to the system            |
-| Data In          | `{ medicineName }`                       |
-| Success Response | `200 OK - Medicine added`                |
-| Error Response   | `403 Forbidden - Access denied`          |
-| Error Response   | `409 Conflict - Medicine already exists` |
+| Field            | Value                                     |
+| ---------------- | ----------------------------------------- |
+| Endpoint         | `POST /medicines`                         |
+| Authorization    | Doctor Token                              |
+| Description      | Adds a medicine to the system             |
+| Data In          | `{ medicineName, medicineQuantity, type }`|
+| Success Response | `200 OK - Medicine added`                 |
+| Error Response   | `403 Forbidden - Access denied`           |
+| Error Response   | `409 Conflict - Medicine already exists`  |
 
 \# 6. Delete Medicine (Doctor Only)
 
 | Field            | Value                                         |
 | ---------------- | --------------------------------------------- |
-| Endpoint         | `DELETE /medicines/{medicineId}`              |
+| Endpoint         | `DELETE /medicines`                           |
 | Authorization    | Doctor Token                                  |
-| Description      | Deletes a medicine if unused                  |
-| Data In          | None                                          |
+| Description      | Deletes a medicine                            |
+| Data In          | `{ medicineName}`                             |
 | Success Response | `200 OK - Medicine deleted`                   |
 | Error Response   | `403 Forbidden - Access denied`               |
 | Error Response   | `409 Conflict - Medicine assigned to patient` |
@@ -160,15 +160,15 @@ The Medicine Planning System is a simple Java-based application designed for hos
 
 \# 8. Patient Views Own Medicines (Patient Only)
 
-| Field            | Value                               |
-| ---------------- | ----------------------------------- |
-| Endpoint         | `GET /my-medicines`                 |
-| Authorization    | Patient Token                       |
-| Description      | Returns logged-in patient medicines |
-| Data In          | None                                |
-| Success Response | `200 OK`                            |
-| Data Out         | `\[ { medicineName, instruction } ]`|
-| Error Response   | `403 Forbidden - Access denied`     |
+| Field            | Value                                        |
+| ---------------- | -------------------------------------------- |
+| Endpoint         | `GET /presctiptions/mymeds`                  |
+| Authorization    | Patient Token                                |
+| Description      | Returns logged-in patient medicines          |
+| Data In          | None                                         |
+| Success Response | `200 OK`                                     |
+| Data Out         | `\[ { medicine, doctorName, instruction } ]` |
+| Error Response   | `403 Forbidden - Access denied`              |
 
 \# 9. Assign Presciption To Patient (Doctor Only)
 
@@ -182,13 +182,14 @@ The Medicine Planning System is a simple Java-based application designed for hos
 | Error Response   | `404 Not Found - Patient or medicine not found` |
 | Error Response   | `403 Forbidden - Access denied`                 |
 
-\# 10. Unauthorized Access (Global)
+\# 10. Delete Presciption From Patient (Doctor Only)
 
-| Field            | Value                                        |
-| ---------------- | -------------------------------------------- |
-| Endpoint         | `ANY`                                        |
-| Authorization    | Invalid or Missing Token                     |
-| Description      | Handles unauthorized API access              |
-| Success Response | None                                         |
-| Error Response   | `401 Unauthorized - Please log in first`     |
-| Error Response   | `403 Forbidden - You do not have permission` |
+| Field            | Value                                           |
+| ---------------- | ----------------------------------------------- |
+| Endpoint         | `DELETE /prescription/{patientId}`              |
+| Authorization    | Doctor Token                                    |
+| Description      | Deletes insctructions for patient's medicine    |
+| Data In          | `{ prescriptionID }`                            |
+| Success Response | `200 OK - Presciption removed`                  |
+| Error Response   | `404 Not Found - Patient or medicine not found` |
+| Error Response   | `403 Forbidden - Access denied`                 |
