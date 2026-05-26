@@ -9,7 +9,7 @@ public class PrescriptionModel {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private Long prescriptionID;
 
     private String description;
     private LocalDate prescribedDate;
@@ -38,12 +38,16 @@ public class PrescriptionModel {
     public PrescriptionModel() {
     }
 
-    public Long getId() {
-        return id;
-    }
-
     public String getDescription() {
         return description;
+    }
+
+    public Long getPrescriptionID() {
+        return prescriptionID;
+    }
+
+    public void setPrescriptionID(Long prescriptionID) {
+        this.prescriptionID = prescriptionID;
     }
 
     public void setDescription(String description) {

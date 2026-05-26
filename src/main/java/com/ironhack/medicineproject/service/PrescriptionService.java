@@ -13,7 +13,9 @@ import com.ironhack.medicineproject.repository.PrescriptionRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.Collections;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class PrescriptionService {
@@ -65,5 +67,18 @@ public class PrescriptionService {
         return GlobalStatus.PRESCRIPTION_CREATED;
     }
 
+    public GlobalStatus deletePrescription(PrescriptionDTO prescriptionDTO) {
+
+        final Optional<PrescriptionModel> findByPrescriptionID
+                = (prescriptionRepository
+                .findByPrescriptionID(prescriptionDTO.getPrescriptionID()));
+
+        if (findByPrescriptionID.isEmpty())
+            return GlobalStatus.PRESCRIPTION_NOT_FOUND;
+        PrescriptionModel prescription = findByPrescriptionID.get();
+        prescriptionRepository.delete(prescription);
+
+        return GlobalStatus.PRESCRIPTION_DELETED;
+    }
 
 }

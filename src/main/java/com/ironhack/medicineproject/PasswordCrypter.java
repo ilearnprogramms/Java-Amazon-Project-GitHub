@@ -2,7 +2,7 @@ package com.ironhack.medicineproject;
 
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
-public class encoder {
+public class PasswordCrypter {
 
     // JUST A QUICK JAVA TOOL TO CREATE CRYPTED PASSWORDS
     public static void main(String[] args) {

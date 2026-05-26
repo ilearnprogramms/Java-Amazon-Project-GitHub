@@ -22,6 +22,8 @@ import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 
 public class PrescriptionDTO {
 
+    @JsonProperty("prescriptionID")
+    private Long prescriptionID;
     @JsonProperty("doctorID")
     private Long doctorID;
     @JsonProperty("patientID")
@@ -46,6 +48,9 @@ public class PrescriptionDTO {
     public PrescriptionDTO() {
     }
 
+    public Long getPrescriptionID() {
+        return prescriptionID;
+    }
     @JsonProperty("doctorID")
     public Long getDoctorID() {
         return doctorID;
@@ -141,5 +146,6 @@ public class PrescriptionDTO {
         }
         return sb.toString();
     }
+
 
 }

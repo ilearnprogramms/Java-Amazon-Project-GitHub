@@ -5,6 +5,7 @@ import com.ironhack.medicineproject.dto.PrescriptionDTO;
 import com.ironhack.medicineproject.enums.GlobalStatus;
 import com.ironhack.medicineproject.model.PrescriptionModel;
 import com.ironhack.medicineproject.service.PrescriptionService;
+import org.springframework.http.HttpStatus;
 import org.springframework.security.core.Authentication;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -51,7 +52,7 @@ public class PrescriptionController {
     }
 
     @PostMapping("/prescription/{patientID}")
-    public ResponseEntity<GlobalStatus> addPrescription(
+    public ResponseEntity addPrescription(
             @PathVariable Long patientID,
             @RequestBody PrescriptionDTO prescriptionDTO
     ) {
@@ -64,7 +65,18 @@ public class PrescriptionController {
         return ResponseEntity.ok(status);
     }
 
-    // TODO delete prescription method DOCTOR_ROLE
+    //  TODO THIS THING IS NOT WORKING LMAOOOOOOOOOOOOOOOOOO CHECK NULL ERRORS
+    @DeleteMapping("/prescription")
+    public ResponseEntity deletePrescription(PrescriptionDTO prescriptionDTO) {
+
+        GlobalStatus status = prescriptionService.deletePrescription(prescriptionDTO);
+
+        if (status.equals(GlobalStatus.PRESCRIPTION_NOT_FOUND))
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Prescription not found");
+
+        return
+                ResponseEntity.status(HttpStatus.OK).body("Prescription deleted");
+    }
 
 
 
