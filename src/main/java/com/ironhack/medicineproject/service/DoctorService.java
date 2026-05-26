@@ -42,10 +42,12 @@ public class DoctorService {
         final List<DoctorModel> findByUsername
                 = Collections.singletonList(doctorRepository
                 .findByUsernameIgnoreCase(doctorDTO.getUsername()));
+
         if (findByUsername.isEmpty())
             return GlobalStatus.DOCTOR_NOT_FOUND;
         DoctorModel doctor = findByUsername.get(0);
         doctorRepository.delete(doctor);
+
         return GlobalStatus.DOCTOR_DELETED;
     }
 

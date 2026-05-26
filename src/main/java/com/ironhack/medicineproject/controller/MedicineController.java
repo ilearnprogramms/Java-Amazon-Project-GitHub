@@ -17,7 +17,7 @@ public class MedicineController {
     @Autowired
     private MedicineService medicineService;
 
-    @GetMapping("/medicine")
+    @GetMapping("/medicines")
     public ResponseEntity getAllMedicines(){
 
         List<MedicineDTO> medicineDTOs = medicineService.getAllMedicines()
@@ -54,13 +54,12 @@ public class MedicineController {
         GlobalStatus status = medicineService.deleteMedicine(medicineDTO);
 
         if (status.equals(GlobalStatus.MEDICINE_NOT_FOUND))
-            return
-                    ResponseEntity.status(HttpStatus.NOT_FOUND).body("Medicine not found");
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Medicine not found");
+
         if (status.equals(GlobalStatus.MEDICINE_DELETED))
-            return
-                    ResponseEntity.status(HttpStatus.OK).body("Medicine deleted");
+            return ResponseEntity.status(HttpStatus.OK).body("Medicine deleted");
         return
-                ResponseEntity.status(HttpStatus.OK).body(medicineDTO);
+                ResponseEntity.status(HttpStatus.OK).body("Medicine deleted");
 
     }
 

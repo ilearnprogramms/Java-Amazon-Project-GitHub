@@ -31,6 +31,7 @@ public class MedicineService {
         MedicineModel medicine = new MedicineModel();
             medicine.setMedicineName(medicineDTO.getMedicineName());
             medicine.setMedicineCategory(medicineDTO.getMedicineCategory());
+            medicine.setMedicineQuantity(medicineDTO.getMedicineQuantity());
             medicineRepository.save(medicine);
 
         return GlobalStatus.MEDICINE_CREATED;
@@ -40,12 +41,13 @@ public class MedicineService {
 
         final List<MedicineModel> findByMedicineName
                 = Collections.singletonList(medicineRepository
-                .deleteByMedicineName(medicineDTO.getMedicineName()));
+                .findByMedicineName(medicineDTO.getMedicineName()));
 
         if (findByMedicineName.isEmpty())
             return GlobalStatus.MEDICINE_NOT_FOUND;
         MedicineModel medicine = findByMedicineName.get(0);
         medicineRepository.delete(medicine);
+
         return GlobalStatus.MEDICINE_DELETED;
     }
 

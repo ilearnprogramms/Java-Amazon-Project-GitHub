@@ -2,6 +2,7 @@ package com.ironhack.medicineproject.controller;
 
 import com.ironhack.medicineproject.dto.DoctorDTO;
 import com.ironhack.medicineproject.dto.PatientDTO;
+import com.ironhack.medicineproject.model.PatientModel;
 import com.ironhack.medicineproject.service.PatientService;
 import com.ironhack.medicineproject.enums.GlobalStatus;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,7 +19,7 @@ public class PatientController {
     @Autowired
     private PatientService patientService;
 
-    @GetMapping("/patient")
+    @GetMapping("/patients")
     public ResponseEntity getAllPatients(){
 
         List<PatientDTO> patientDTOs = patientService.getAllPatients()
@@ -58,7 +59,7 @@ public class PatientController {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Patient not found");
 
         if (status.equals(GlobalStatus.PATIENT_DELETED))
-            return ResponseEntity.status(HttpStatus.OK).body("Patient deleted");
+            return ResponseEntity.status(HttpStatus.OK).body("Patient " + patientDTO.getPatientTitle() + "." + patientDTO.getPatientLastName() + " deleted");
         return
                 ResponseEntity.status(HttpStatus.OK).body(patientDTO);
     }

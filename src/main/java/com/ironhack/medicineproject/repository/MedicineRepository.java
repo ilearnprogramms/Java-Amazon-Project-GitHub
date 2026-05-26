@@ -9,5 +9,5 @@ import java.util.Optional;
 public interface MedicineRepository extends JpaRepository <MedicineModel,Long> {
 
     Optional<MedicineModel> findByMedicineID (Long medicineID);
-    MedicineModel deleteByMedicineName(String medicineName);
+    MedicineModel findByMedicineName (String medicineName);
 }

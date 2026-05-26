@@ -15,7 +15,6 @@ public class PrescriptionModel {
     private LocalDate prescribedDate;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "patient_id")
     private PatientModel patient;
 
     @ManyToOne(fetch = FetchType.LAZY)

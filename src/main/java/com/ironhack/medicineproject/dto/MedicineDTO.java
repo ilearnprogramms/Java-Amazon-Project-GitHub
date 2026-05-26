@@ -29,6 +29,12 @@ public class MedicineDTO {
     @JsonIgnore
     private Map<String, Object> additionalProperties = new LinkedHashMap<String, Object>();
 
+    public MedicineDTO(String medicineName, MedicineCategory medicineCategory, Integer medicineQuantity) {
+        this.medicineName = medicineName;
+        this.medicineCategory = medicineCategory;
+        this.medicineQuantity = medicineQuantity;
+    }
+
     public MedicineDTO() {
     }
 
@@ -49,12 +55,6 @@ public class MedicineDTO {
 
     @JsonProperty("medicineQuantity")
     public void setMedicineQuantity(Integer medicineQuantity) {
-        this.medicineQuantity = medicineQuantity;
-    }
-
-    public MedicineDTO(String medicineName, MedicineCategory medicineCategory, Integer medicineQuantity) {
-        this.medicineName = medicineName;
-        this.medicineCategory = medicineCategory;
         this.medicineQuantity = medicineQuantity;
     }
 

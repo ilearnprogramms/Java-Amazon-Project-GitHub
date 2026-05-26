@@ -20,14 +20,22 @@ public class PrescriptionController {
     @Autowired
     PrescriptionService prescriptionService;
 
-    // TODO PATIENT INFO IS BEING RETURNED AS NULL
-    @GetMapping("/prescription")
+    @GetMapping("/prescriptions")
     public ResponseEntity getAllPrescriptions(){
+
+        List<PrescriptionDTO> prescriptionDTOS = prescriptionService.getAllPrescriptions()
+                .stream()
+                .map( p -> new PrescriptionDTO(
+                        p.getDoctor().getDoctorID(),
+                        p.getPatient().getPatientID(),
+                        p.getMedicine().getMedicineID(),
+                        p.getDescription(),
+                        p.getPrescribedDate()
+                ))
+                .toList();
         return ResponseEntity.ok(prescriptionService.getAllPrescriptions());
     }
 
-
-    // TODO METHOD WORKS BUT PRINTS NOTHING
     @PreAuthorize("hasRole('PATIENT')")
     @GetMapping("/prescription/mymeds")
     public List<PrescriptionModel> getMyPrescriptions(
@@ -36,6 +44,7 @@ public class PrescriptionController {
         CustomUserDetails user =
                 (CustomUserDetails) authentication.getPrincipal();
 
+        assert user != null;
         Long patientID = user.getId();
 
         return prescriptionService.getByPatientID(patientID);
@@ -54,6 +63,8 @@ public class PrescriptionController {
 
         return ResponseEntity.ok(status);
     }
+
+    // TODO delete prescription method DOCTOR_ROLE
 
 
 
