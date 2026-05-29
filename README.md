@@ -68,6 +68,7 @@ The Medicine Planning System is a simple Java-based application designed for hos
 * A Doctor can delete a patient (DELETE)
 * A Doctor can delete a medicine (DELETE)
 * A Doctor can delete a prescription (DELETE)
+* A Doctor can update a medicine quantity (PUT)
  
 * Patients can see their assigned medicines (GET)
 * Patients cannot access to other patients information
@@ -77,8 +78,7 @@ The Medicine Planning System is a simple Java-based application designed for hos
 
 ### UML Class Diagramm
 
-<img width="606" height="723" alt="grafik" src="https://github.com/user-attachments/assets/c048c3ab-0a28-490a-9974-f9fc8838a4b7" />
-
+<img width="555" height="680" alt="image(2)" src="https://github.com/user-attachments/assets/c640610f-35a5-4bf7-a207-57967af85730" />
 
 ### API Documentation
 
@@ -210,7 +210,21 @@ The Medicine Planning System is a simple Java-based application designed for hos
 
 ---
 
-## 10. Delete Medicine
+## 10. Update Medicine Quantity
+
+| Field | Value |
+|---|---|
+| **Endpoint** | `POST /medicine/{medicineID}` |
+| **Authorization** | Doctor |
+| **Description** | updates a medicine quantity |
+| **Data In** | `{ medicineQuantity }` |
+| **Success Response** | `201 Updated` |
+| **Error Response** | `403 Forbidden` |
+| **Error Response** | `409 Conflict` |
+
+---
+
+## 11. Delete Medicine
 
 | Field | Value |
 |---|---|
@@ -224,7 +238,7 @@ The Medicine Planning System is a simple Java-based application designed for hos
 
 ---
 
-## 11. Assign Prescription
+## 12. Assign Prescription
 
 | Field | Value |
 |---|---|
@@ -238,7 +252,7 @@ The Medicine Planning System is a simple Java-based application designed for hos
 
 ---
 
-## 12. Delete Prescription
+## 13. Delete Prescription
 
 | Field | Value |
 |---|---|
@@ -252,7 +266,7 @@ The Medicine Planning System is a simple Java-based application designed for hos
 
 ---
 
-## 13. View Own Medicines
+## 14. View Own Medicines
 
 | Field | Value |
 |---|---|
