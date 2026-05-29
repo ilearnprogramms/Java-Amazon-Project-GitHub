@@ -1,13 +1,14 @@
 package com.ironhack.medicineproject.controller;
 
 import com.ironhack.medicineproject.dto.DoctorDTO;
+import com.ironhack.medicineproject.exceptions.SuccessResponse;
+import com.ironhack.medicineproject.model.DoctorModel;
 import com.ironhack.medicineproject.service.DoctorService;
-import com.ironhack.medicineproject.enums.GlobalStatus;
 import jakarta.servlet.http.HttpServletRequest;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.web.csrf.CsrfToken;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -20,16 +21,10 @@ public class DoctorController {
     @Autowired
     private DoctorService doctorService;
 
-    // TODO LOGIN
     @GetMapping("/")
     public String greet(HttpServletRequest request) {
         return "Welcome to Medicine Project!\n " + request.getSession().getId();
     }
-
-//    @GetMapping("/csrf-token")
-//    public CsrfToken getCsrfToken(HttpServletRequest request){
-//        return (CsrfToken) request.getAttribute("_csrf");
-//    }
 
     @GetMapping("/doctors")
     public ResponseEntity getAllDoctors() {
@@ -51,23 +46,14 @@ public class DoctorController {
     }
 
     @PostMapping("/doctor")
-    public ResponseEntity addNewDoctor(@RequestBody DoctorDTO doctorDTO) {
+    public ResponseEntity addNewDoctor(@Valid @RequestBody DoctorDTO doctorDTO) {
 
         Logger doctorLogger = Logger.getLogger("DoctorController");
         doctorLogger.info("Adding a new doctor");
 
-
-        GlobalStatus status = doctorService.addNewDoctor(doctorDTO);
-
-        if (status.equals(GlobalStatus.NAME_TOO_SHORT))
-            return
-                    ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Name is too short");
-        if (status.equals(GlobalStatus.NAME_TOO_LONG))
-            return
-                    ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Name is too long");
+        DoctorModel addDoctor = doctorService.addNewDoctor(doctorDTO);
         return
-                ResponseEntity.status(HttpStatus.CREATED).body(doctorDTO);
-        // TODO ADD MORE ERROR HANDLING
+                ResponseEntity.ok(new SuccessResponse("Doctor Added", doctorDTO));
     }
 
     @DeleteMapping("/doctor")
@@ -76,15 +62,10 @@ public class DoctorController {
         Logger doctorLogger = Logger.getLogger("DoctorController");
         doctorLogger.info("Deleting a doctor");
 
-        GlobalStatus status = doctorService.deleteDoctor(doctorDTO);
-
-        if (status.equals(GlobalStatus.DOCTOR_NOT_FOUND))
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Doctor not found");
-
-        if (status.equals(GlobalStatus.DOCTOR_DELETED))
-            return ResponseEntity.status(HttpStatus.OK).body("Doctor deleted");
+        DoctorModel deletedDoctor = doctorService.deleteDoctor(doctorDTO);
         return
-                ResponseEntity.status(HttpStatus.OK).body("Doctor deleted");
+                ResponseEntity.ok(new SuccessResponse("Doctor deleted", doctorDTO));
+
     }
 
 }

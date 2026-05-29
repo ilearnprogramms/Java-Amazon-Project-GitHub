@@ -10,6 +10,8 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @JsonPropertyOrder({
@@ -24,16 +26,24 @@ public class PrescriptionDTO {
 
     @JsonProperty("prescriptionID")
     private Long prescriptionID;
+
     @JsonProperty("doctorID")
     private Long doctorID;
+
     @JsonProperty("patientID")
     private Long patientID;
+
     @JsonProperty("medicineID")
     private Long medicineID;
+
     @JsonProperty("description")
+    @NotBlank(message = "Description cannot be empty")
     private String description;
+
     @JsonProperty("prescribedDate")
+    @NotNull(message = "Date cannot be empty")
     private LocalDate prescribedDate;
+
     @JsonIgnore
     private Map<String, Object> additionalProperties = new LinkedHashMap<String, Object>();
 

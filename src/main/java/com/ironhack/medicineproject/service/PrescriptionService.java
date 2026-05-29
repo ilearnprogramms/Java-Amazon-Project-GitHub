@@ -1,7 +1,7 @@
 package com.ironhack.medicineproject.service;
 
 import com.ironhack.medicineproject.dto.PrescriptionDTO;
-import com.ironhack.medicineproject.enums.GlobalStatus;
+import com.ironhack.medicineproject.exceptions.SearchNotFoundException;
 import com.ironhack.medicineproject.model.DoctorModel;
 import com.ironhack.medicineproject.model.MedicineModel;
 import com.ironhack.medicineproject.model.PatientModel;
@@ -12,7 +12,6 @@ import com.ironhack.medicineproject.repository.PatientRepository;
 import com.ironhack.medicineproject.repository.PrescriptionRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import java.util.Collections;
 import java.util.List;
 
 @Service
@@ -36,10 +35,7 @@ public class PrescriptionService {
         return prescriptionRepository.findByPatient_PatientID(patientID);
     }
 
-    public GlobalStatus addPrescription(PrescriptionDTO prescriptionDTO) {
-
-        if(prescriptionDTO.getDescription().isBlank()) ///  OR isEmpty() ?
-            return GlobalStatus.PRESCRIPTION_CAN_NOT_BE_EMPTY;
+    public PrescriptionModel addPrescription(PrescriptionDTO prescriptionDTO) {
 
         DoctorModel doctor = doctorRepository
                 .findById(prescriptionDTO.getDoctorID())
@@ -60,42 +56,20 @@ public class PrescriptionService {
                 doctor,
                 medicine
         );
-            prescriptionRepository.save(prescription);
-
-        return GlobalStatus.PRESCRIPTION_CREATED;
+        return prescriptionRepository.save(prescription);
     }
 
-    ///  TODO TEST THIS METHOD
-    /*
-    public GlobalStatus addPrescription(PrescriptionDTO dto) {
+    public PrescriptionModel deletePrescription(PrescriptionDTO prescriptionDTO) {
 
-    if (dto.getDescription().isBlank())
-        return GlobalStatus.PRESCRIPTION_CAN_NOT_BE_EMPTY;
+        PrescriptionModel prescription = prescriptionRepository.findByPrescriptionID(
+                        prescriptionDTO.getPrescriptionID());
 
-    prescriptionRepository.save(new PrescriptionModel(
-            dto.getDescription(),
-            dto.getPrescribedDate(),
-            patientRepository.findById(dto.getPatientID()).orElseThrow(),
-            doctorRepository.findById(dto.getDoctorID()).orElseThrow(),
-            medicineRepository.findByMedicineID(dto.getMedicineID()).orElseThrow()
-    ));
-
-    return GlobalStatus.PRESCRIPTION_CREATED;
-}
-     */
-
-    public GlobalStatus deletePrescription(PrescriptionDTO prescriptionDTO) {
-
-        final List<PrescriptionModel> findByPrescriptionID
-                = Collections.singletonList(prescriptionRepository
-                .findByPrescriptionID(prescriptionDTO.getPrescriptionID()));
-
-        if (findByPrescriptionID.isEmpty())
-            return GlobalStatus.PRESCRIPTION_NOT_FOUND;
-        PrescriptionModel prescription = findByPrescriptionID.get(0);
+        if (prescription == null) {
+            throw new SearchNotFoundException("Couldn't find the prescription: " +
+                      prescriptionDTO.getPrescriptionID());
+        }
         prescriptionRepository.delete(prescription);
-
-        return GlobalStatus.PRESCRIPTION_DELETED;
+        return prescription;
     }
 
 }

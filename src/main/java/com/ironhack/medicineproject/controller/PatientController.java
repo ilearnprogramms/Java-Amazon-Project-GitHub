@@ -1,8 +1,10 @@
 package com.ironhack.medicineproject.controller;
 
 import com.ironhack.medicineproject.dto.PatientDTO;
+import com.ironhack.medicineproject.exceptions.SuccessResponse;
+import com.ironhack.medicineproject.model.PatientModel;
 import com.ironhack.medicineproject.service.PatientService;
-import com.ironhack.medicineproject.enums.GlobalStatus;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -38,39 +40,25 @@ public class PatientController {
     }
 
     @PostMapping("/patient")
-    public ResponseEntity addNewPatient(@RequestBody PatientDTO patientDTO){
+    public ResponseEntity addNewPatient(@Valid @RequestBody PatientDTO patientDTO){
 
         Logger patientLogger = Logger.getLogger("PatientController");
         patientLogger.info("Adding a new Patient");
 
-        GlobalStatus status = patientService.addNewPatient(patientDTO);
-
-        if (status.equals(GlobalStatus.NAME_TOO_SHORT))
-            return
-                    ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Patient Name is too short");
-        if (status.equals(GlobalStatus.NAME_TOO_LONG))
-            return
-                    ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Patient Name is too long");
+        PatientModel addPatient = patientService.addNewPatient(patientDTO);
         return
-                ResponseEntity.status(HttpStatus.CREATED).body(patientDTO);
+                ResponseEntity.ok(new SuccessResponse("Patient added", patientDTO));
     }
 
-    //  TODO HTTP OK RETURNS NULL FOR PATIENT TITLE AND NAME
     @DeleteMapping("/patient")
-    public ResponseEntity deletePatient(@RequestBody PatientDTO patientDTO) {
+    public ResponseEntity<?> deletePatient(@RequestBody PatientDTO patientDTO) {
 
         Logger patientLogger = Logger.getLogger("PatientController");
         patientLogger.info("Deleting a Patient");
 
-        GlobalStatus status = patientService.deletePatient(patientDTO);
-
-        if (status.equals(GlobalStatus.PATIENT_NOT_FOUND))
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Patient not found");
-
-        if (status.equals(GlobalStatus.PATIENT_DELETED))
-            return ResponseEntity.status(HttpStatus.OK).body("Patient " + patientDTO.getPatientTitle() + "." + patientDTO.getPatientLastName() + " deleted");
+        PatientModel deletedPatient = patientService.deletePatient(patientDTO);
         return
-                ResponseEntity.status(HttpStatus.OK).body(patientDTO);
+                ResponseEntity.ok(new SuccessResponse("Patient deleted", patientDTO));
     }
 
 

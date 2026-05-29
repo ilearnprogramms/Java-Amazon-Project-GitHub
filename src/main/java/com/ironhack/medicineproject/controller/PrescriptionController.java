@@ -2,16 +2,15 @@ package com.ironhack.medicineproject.controller;
 
 import com.ironhack.medicineproject.configurations.CustomUserDetails;
 import com.ironhack.medicineproject.dto.PrescriptionDTO;
-import com.ironhack.medicineproject.enums.GlobalStatus;
+import com.ironhack.medicineproject.exceptions.SuccessResponse;
 import com.ironhack.medicineproject.model.PrescriptionModel;
 import com.ironhack.medicineproject.service.PrescriptionService;
-import org.springframework.http.HttpStatus;
+import jakarta.validation.Valid;
 import org.springframework.security.core.Authentication;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
-
 import java.util.List;
 import java.util.logging.Logger;
 
@@ -58,9 +57,9 @@ public class PrescriptionController {
     }
 
     @PostMapping("/prescription/{patientID}")
-    public ResponseEntity addPrescription(
+    public ResponseEntity<?> addPrescription(
             @PathVariable Long patientID,
-            @RequestBody PrescriptionDTO prescriptionDTO
+            @Valid @RequestBody PrescriptionDTO prescriptionDTO
     ) {
 
         Logger prescriptionsLogger = Logger.getLogger("PrescriptionController");
@@ -68,26 +67,22 @@ public class PrescriptionController {
 
         prescriptionDTO.setPatientID(patientID);
 
-        GlobalStatus status =
-                prescriptionService.addPrescription(prescriptionDTO);
+        PrescriptionModel addPrescription = prescriptionService.addPrescription(prescriptionDTO);
+        return
+                ResponseEntity.ok(new SuccessResponse("Prescription Added to the patient ", prescriptionDTO));
 
-        return ResponseEntity.ok(status);
     }
 
+
     @DeleteMapping("/prescription")
-    public ResponseEntity deletePrescription(
+    public ResponseEntity<?> deletePrescription(
             @RequestBody PrescriptionDTO prescriptionDTO) {
 
         Logger prescriptionsLogger = Logger.getLogger("PrescriptionController");
         prescriptionsLogger.info("Deleting a Prescription");
 
-        GlobalStatus status = prescriptionService.deletePrescription(prescriptionDTO);
-
-        if (status.equals(GlobalStatus.PRESCRIPTION_NOT_FOUND))
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Prescription not found");
-
+        PrescriptionModel deletedPrescription = prescriptionService.deletePrescription(prescriptionDTO);
         return
-                ResponseEntity.status(HttpStatus.OK).body("Prescription deleted");
+                ResponseEntity.ok(new SuccessResponse("Prescription deleted", prescriptionDTO.getPrescriptionID()));
     }
-
 }

@@ -1,8 +1,10 @@
 package com.ironhack.medicineproject.controller;
 
 import com.ironhack.medicineproject.dto.MedicineDTO;
+import com.ironhack.medicineproject.exceptions.SuccessResponse;
+import com.ironhack.medicineproject.model.MedicineModel;
 import com.ironhack.medicineproject.service.MedicineService;
-import com.ironhack.medicineproject.enums.GlobalStatus;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -38,38 +40,25 @@ public class MedicineController {
 
 
     @PostMapping("/medicine")
-    public ResponseEntity addNewMedicine(@RequestBody MedicineDTO medicineDTO){
+    public ResponseEntity addNewMedicine(@Valid @RequestBody MedicineDTO medicineDTO){
 
         Logger medicineLogger = Logger.getLogger("MedicineController");
         medicineLogger.info("Posting the following medicine: " +  medicineDTO.getMedicineName());
 
-        GlobalStatus status = medicineService.addNewMedicine(medicineDTO);
-
-        if (status.equals(GlobalStatus.NAME_TOO_SHORT))
-            return
-                    ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Medicine name is too short");
-        if (status.equals(GlobalStatus.NAME_TOO_LONG))
-            return
-                    ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Pretty long name for a medicine");
+        MedicineModel addMedicine = medicineService.addNewMedicine(medicineDTO);
         return
-                ResponseEntity.status(HttpStatus.CREATED).body(medicineDTO);
+                ResponseEntity.ok(new SuccessResponse("Medicine added", medicineDTO));
     }
 
     @DeleteMapping("/medicine")
-    public ResponseEntity deleteMedicine(@RequestBody MedicineDTO medicineDTO){
+    public ResponseEntity<?> deleteMedicine(@RequestBody MedicineDTO medicineDTO){
 
         Logger medicineLogger = Logger.getLogger("MedicineController");
         medicineLogger.info("Deleting the medicine: " +  medicineDTO.getMedicineName());
 
-        GlobalStatus status = medicineService.deleteMedicine(medicineDTO);
-
-        if (status.equals(GlobalStatus.MEDICINE_NOT_FOUND))
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Medicine not found");
-
-        if (status.equals(GlobalStatus.MEDICINE_DELETED))
-            return ResponseEntity.status(HttpStatus.OK).body("Medicine deleted");
+        MedicineModel deletedMedicine = medicineService.deleteMedicine(medicineDTO);
         return
-                ResponseEntity.status(HttpStatus.OK).body("Medicine deleted");
+                ResponseEntity.ok(new SuccessResponse("Medicine deleted", medicineDTO.getMedicineName()));
 
     }
 

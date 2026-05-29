@@ -8,7 +8,10 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
+import jakarta.validation.constraints.NotBlank;
 import com.ironhack.medicineproject.enums.DoctorateTitles;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Size;
 
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @JsonPropertyOrder({
@@ -20,14 +23,25 @@ import com.ironhack.medicineproject.enums.DoctorateTitles;
 
 public class DoctorDTO {
 
+
     @JsonProperty("drTitle")
+    @NotNull(message = "Title cannot be empty")
     private DoctorateTitles drTitle;
+
     @JsonProperty("drLastName")
+    @NotBlank(message = "Name cannot be empty")
+    @Size(min = 3, max = 20, message = "Name must be between 3 and 20 characters")
     private String drLastName;
+
     @JsonProperty("username")
+    @NotBlank(message = "Username cannot be empty")
+    @Size(min = 3, max = 20, message = "Name must be between 3 and 20 characters")
     private String username;
+
     @JsonProperty("password")
+    @NotBlank(message = "Password cannot be empty")
     private String password;
+
     @JsonIgnore
     private Map<String, Object> additionalProperties = new LinkedHashMap<String, Object>();
 

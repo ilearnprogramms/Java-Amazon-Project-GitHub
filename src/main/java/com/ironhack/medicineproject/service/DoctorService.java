@@ -1,13 +1,11 @@
 package com.ironhack.medicineproject.service;
 
 import com.ironhack.medicineproject.dto.DoctorDTO;
+import com.ironhack.medicineproject.exceptions.SearchNotFoundException;
 import com.ironhack.medicineproject.model.DoctorModel;
 import com.ironhack.medicineproject.repository.DoctorRepository;
-import com.ironhack.medicineproject.enums.GlobalStatus;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
-import java.util.Collections;
 import java.util.List;
 
 @Service
@@ -20,35 +18,28 @@ public class DoctorService {
         return doctorRepository.findAll();
     }
 
-    public GlobalStatus addNewDoctor(DoctorDTO doctorDTO){
-        if (doctorDTO.getDrLastName().length() < 3)
-            return GlobalStatus.NAME_TOO_SHORT;
+    public DoctorModel addNewDoctor(DoctorDTO doctorDTO){
 
-        if (doctorDTO.getDrLastName().length() > 19)
-            return GlobalStatus.NAME_TOO_LONG;
-
-        DoctorModel doctor = new DoctorModel();
+                DoctorModel doctor = new DoctorModel();
                 doctor.setDrTitle(doctorDTO.getDrTitle());
                 doctor.setDrLastName(doctorDTO.getDrLastName());
                 doctor.setUsername(doctorDTO.getUsername());
                 doctor.setPassword(doctorDTO.getPassword());
-                doctorRepository.save(doctor);
 
-        return GlobalStatus.DOCTOR_CREATED;
+        return doctorRepository.save(doctor);
     }
 
-    public GlobalStatus deleteDoctor(DoctorDTO doctorDTO){
+    public DoctorModel deleteDoctor(DoctorDTO doctorDTO){
 
-        final List<DoctorModel> findByUsername
-                = Collections.singletonList(doctorRepository
-                .findByUsernameIgnoreCase(doctorDTO.getUsername()));
+        final DoctorModel doctor = doctorRepository
+                .findByUsernameIgnoreCase(doctorDTO.getUsername());
 
-        if (findByUsername.isEmpty())
-            return GlobalStatus.DOCTOR_NOT_FOUND;
-        DoctorModel doctor = findByUsername.get(0);
+        if (doctor == null) {
+            throw new SearchNotFoundException("Couldn't find the Doctor: " +
+                      doctorDTO.getUsername());
+        }
         doctorRepository.delete(doctor);
-
-        return GlobalStatus.DOCTOR_DELETED;
+        return doctor;
     }
 
 }

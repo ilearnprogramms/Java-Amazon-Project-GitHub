@@ -1,4 +1,4 @@
-package com.ironhack.medicineproject;
+package com.ironhack.medicineproject.configurations;
 
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
