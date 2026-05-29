@@ -4,7 +4,7 @@ IronHack Week 13 Final Project
 ### Ironhack Project :
 
 
-#### Medicinist / INFO System
+#### Prescriptionist / INFO System
 
 The Medicine Planning System is a Java-based application designed for hospitals, pharmacies, and veterinary clinics to manage patient medications and records efficiently.
 
@@ -18,6 +18,8 @@ The Medicine Planning System is a Java-based application designed for hospitals,
 
 \- Lastname     (Dr. XXXX)
 
+\- Doctor Title (DVM/MD/PHD/RN)
+
 ###### Patients ( User )
 
 \- Login username
@@ -26,7 +28,9 @@ The Medicine Planning System is a Java-based application designed for hospitals,
 
 \- Patient ID   (Unique / Auto generated)
 
-\- Lastname     (Mr/Ms/Mrs XXXX)
+\- Lastname     
+
+\- PatientTitle (Mr/Ms/Mrs/Mx)
 
 ###### Medicines ( Objects )
 
@@ -42,7 +46,7 @@ The Medicine Planning System is a Java-based application designed for hospitals,
 
 \- Related -> doctorID, patientID, medicineID
 
-\- Information
+\- Description
 
 \- Date
 
@@ -54,22 +58,27 @@ The Medicine Planning System is a simple Java-based application designed for hos
 ### REQUIREMENTS
 
 * A Doctor (Pharmacists/Vets/Nurses) has the option to access patient data (GET)
+  
+* A Doctor can add a new doctor (POST)
 * A Doctor can add a new patient (POST)
 * A Doctor can add a new medicine (POST)
+* A Doctor can add a new prescription (POST)
+  
+* A Doctor can delete a doctor (DELETE)
 * A Doctor can delete a patient (DELETE)
-* A Doctor can delete medicines if it's not assigned to a patient (DELETE)
-* A Doctor can add a medicine and prescription to the patients data (PUT)
-
-* Doctor ----< Prescription >---- Patient
-                  |
-                  v
-               Medicine
-
+* A Doctor can delete a medicine (DELETE)
+* A Doctor can delete a prescription (DELETE)
+ 
 * Patients can see their assigned medicines (GET)
 * Patients cannot access to other patients information
 * Patients cannot edit their medicines
 
 * Error messages will be shown for unavailable API URL accessing (WebSecurity SecurityConfig)
+
+### UML Class Diagramm
+
+<img width="606" height="723" alt="grafik" src="https://github.com/user-attachments/assets/c048c3ab-0a28-490a-9974-f9fc8838a4b7" />
+
 
 ### API Documentation
 
