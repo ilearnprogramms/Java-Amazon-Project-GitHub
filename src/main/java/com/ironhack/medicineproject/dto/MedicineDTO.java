@@ -23,6 +23,9 @@ import jakarta.validation.constraints.Size;
 
 public class MedicineDTO {
 
+    @JsonProperty("medicineID")
+    private Long medicineID;
+
     @JsonProperty("medicineName")
     @NotBlank(message = "Medicine cannot be empty")
     @Size(min = 3, max = 20, message = "Medicine name must be between 3 and 20 characters")
@@ -47,6 +50,16 @@ public class MedicineDTO {
 
     public MedicineDTO() {
     }
+
+    public Long getMedicineID() {
+        return medicineID;
+    }
+
+    public void setMedicineID(Long medicineID) {
+        this.medicineID = medicineID;
+    }
+
+
 
     @JsonProperty("medicineName")
     public String getMedicineName() {

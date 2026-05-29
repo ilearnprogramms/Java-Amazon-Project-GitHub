@@ -21,7 +21,7 @@ public class MedicineController {
     private MedicineService medicineService;
 
     @GetMapping("/medicines")
-    public ResponseEntity getAllMedicines(){
+    public ResponseEntity getAllMedicines() {
 
         Logger medicineLogger = Logger.getLogger("MedicineController");
         medicineLogger.info("Getting all Medicines");
@@ -38,9 +38,8 @@ public class MedicineController {
         return ResponseEntity.status(HttpStatus.OK).body(medicineDTOs);
     }
 
-
     @PostMapping("/medicine")
-    public ResponseEntity addNewMedicine(@Valid @RequestBody MedicineDTO medicineDTO){
+    public ResponseEntity addNewMedicine(@Valid @RequestBody MedicineDTO medicineDTO) {
 
         Logger medicineLogger = Logger.getLogger("MedicineController");
         medicineLogger.info("Posting the following medicine: " +  medicineDTO.getMedicineName());
@@ -50,8 +49,21 @@ public class MedicineController {
                 ResponseEntity.ok(new SuccessResponse("Medicine added", medicineDTO));
     }
 
+    @PutMapping("/medicine/{medicineID}")
+    public ResponseEntity<?> updateMedicine (@PathVariable Long medicineID,
+                                             @RequestBody MedicineDTO medicineDTO){
+
+        Logger medicineLogger = Logger.getLogger("MedicineController");
+        medicineLogger.info("Updating quantity for: " + medicineID);
+
+        MedicineModel updatedMedicine =
+                medicineService.updateMedicineQuantity(medicineID, medicineDTO.getMedicineQuantity());
+        return
+                ResponseEntity.ok(new SuccessResponse("Medicine quantity updated", updatedMedicine));
+    }
+
     @DeleteMapping("/medicine")
-    public ResponseEntity<?> deleteMedicine(@RequestBody MedicineDTO medicineDTO){
+    public ResponseEntity<?> deleteMedicine(@RequestBody MedicineDTO medicineDTO) {
 
         Logger medicineLogger = Logger.getLogger("MedicineController");
         medicineLogger.info("Deleting the medicine: " +  medicineDTO.getMedicineName());

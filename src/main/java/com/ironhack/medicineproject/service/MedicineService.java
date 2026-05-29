@@ -28,13 +28,23 @@ public class MedicineService {
         return medicineRepository.save(medicine);
     }
 
+    public MedicineModel updateMedicineQuantity(Long medicineID, Integer medicineQuantity){
+
+        final MedicineModel medicine = medicineRepository.findById(medicineID)
+                        .orElseThrow(()
+                                -> new SearchNotFoundException("Couldn't find medicine with id: " + medicineID));
+
+        medicine.setMedicineQuantity(medicineQuantity);
+        return medicineRepository.save(medicine);
+    }
+
     public MedicineModel deleteMedicine (MedicineDTO medicineDTO){
 
         final MedicineModel medicine = medicineRepository
                 .findByMedicineName(medicineDTO.getMedicineName());
 
         if (medicine == null){
-            throw new SearchNotFoundException("Couldn't find the prescription: " +
+            throw new SearchNotFoundException("Couldn't find the medicine: " +
                       medicineDTO.getMedicineName());
         }
 
