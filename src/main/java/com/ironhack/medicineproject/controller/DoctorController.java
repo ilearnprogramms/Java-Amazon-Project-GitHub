@@ -21,9 +21,9 @@ public class DoctorController {
     @Autowired
     private DoctorService doctorService;
 
-    @GetMapping("/")
-    public String greet(HttpServletRequest request) {
-        return "Welcome to Medicine Project!\n " + request.getSession().getId();
+    @GetMapping("/welcome")
+    public String greet() {
+        return "Welcome to Medicine Project!\n ";
     }
 
     @GetMapping("/doctors")
