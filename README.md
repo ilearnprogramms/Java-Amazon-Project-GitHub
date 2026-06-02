@@ -1,78 +1,27 @@
 # Java-Amazon-Project-GitHub
 IronHack Week 13 Final Project
 
-### Ironhack Project :
-
-
-#### Prescriptionist / INFO System
-
-The Medicine Planning System is a Java-based application designed for hospitals, pharmacies, and veterinary clinics to manage patient medications and records efficiently.
-
-###### Doctor ( Or Pharmacists/Vet/Nurse )
-
-\- Login username
-
-\- Password
-
-\- Doctor ID    (Unique / Auto generated)
-
-\- Lastname     (Dr. XXXX)
-
-\- Doctor Title (DVM/MD/PHD/RN)
-
-###### Patients ( User )
-
-\- Login username
-
-\- Password
-
-\- Patient ID   (Unique / Auto generated)
-
-\- Lastname     
-
-\- PatientTitle (Mr/Ms/Mrs/Mx)
-
-###### Medicines ( Objects )
-
-\- Medicine ID  (Unique / Auto generated)
-
-\- Medicine Name
-
-\- Medicine Quantity
-
-###### Prescription ( Objects )
-
-\- Prescription ID  (Unique / Auto generated)
-
-\- Related -> doctorID, patientID, medicineID
-
-\- Description
-
-\- Date
-
-
 ### ABSTRACT
 
-The Medicine Planning System is a simple Java-based application designed for hospitals, pharmacies, and veterinary clinics to manage patient medications and records efficiently. The system allows healthcare professionals such as pharmacists, doctors, nurses, and veterinarians to access and manage patient data through an administrative interface. Authorized users can create, edit, and remove medicines from the system, as well as assign or update medications for patients. Administrators can also create or delete patient profiles and add medical instructions or notes. Patients are able to view their assigned medicines and annotations through their own accounts. To maintain privacy and security, patients cannot edit their medications or access information belonging to other patients. The system includes error handling and security features that prevent unauthorized access and invalid actions. This project demonstrates the use of Java programming, object-oriented principles, and access control in a real-world healthcare management application.
+The Prescription Planning System is an application designed for hospitals, pharmacies, and veterinary clinics to manage patient medications and records efficiently. The system provides a Backend-for-Frontend API that enables healthcare applications to access and manage patient data. Authorized Healthcare staff can create, edit, and remove medicines from the system, as well as create and manage prescriptions for patients. Healthcare staff can create, update, or delete patient and doctor profiles and add medical instructions or notes for patients. Patients then can view their assigned medications and prescriptions through client applications connected to the system. To ensure privacy and security, patients cannot modify their medications or access information belonging to other patients.
 
 ### REQUIREMENTS
 
-* A Doctor (Pharmacists/Vets/Nurses) has the option to access patient data (GET)
-  
-* A Doctor can add a new doctor (POST)
-* A Doctor can add a new patient (POST)
-* A Doctor can add a new medicine (POST)
-* A Doctor can add a new prescription (POST)
-  
-* A Doctor can delete a doctor (DELETE)
-* A Doctor can delete a patient (DELETE)
-* A Doctor can delete a medicine (DELETE)
-* A Doctor can delete a prescription (DELETE)
-* A Doctor can update a medicine quantity (PUT)
- 
-* Patients can see their assigned medicines (GET)
-* Patients cannot access to other patients information
-* Patients cannot edit their medicines
+## Healthcare Staff Functions
+* Healthcare staff (Doctors, Pharmacists, Nurses, and Veterinarians) can view patient information (GET).
+* Healthcare staff can add a new staff member (POST).
+* Healthcare staff can add a new patient (POST).
+* Healthcare staff can add a new medicine (POST).
+* Healthcare staff can create a new prescription (POST).
+* Healthcare staff can delete a staff member (DELETE).
+* Healthcare staff can delete a patient (DELETE).
+* Healthcare staff can delete a medicine (DELETE).
+* Healthcare staff can delete a prescription (DELETE).
+* Healthcare staff can update medicine quantities (PUT).
+## Patient Functions
+* Patients can view their assigned medicines and prescriptions (GET).
+* Patients cannot access information belonging to other patients.
+* Patients cannot create, edit, or delete medicines or prescriptions.
 
 * Error messages will be shown for unavailable API URL accessing (WebSecurity SecurityConfig)
 
@@ -130,7 +79,7 @@ The Medicine Planning System is a simple Java-based application designed for hos
 |---|---|
 | **Endpoint** | `DELETE /doctor` |
 | **Authorization** | Doctor |
-| **Description** | Deletes a doctor |
+| **Description** | Deletes a Doctor |
 | **Data In** | `{ userName }` |
 | **Success Response** | `200 OK` |
 | **Error Response** | `404 Not Found` |
@@ -144,7 +93,7 @@ The Medicine Planning System is a simple Java-based application designed for hos
 |---|---|
 | **Endpoint** | `GET /patients` |
 | **Authorization** | Doctor |
-| **Description** | Returns patient information |
+| **Description** | Returns all patients information |
 | **Data In** | `None` |
 | **Data Out** | `{ patientTitle, userName, lastName, password }` |
 | **Success Response** | `200 OK` |
@@ -159,7 +108,7 @@ The Medicine Planning System is a simple Java-based application designed for hos
 |---|---|
 | **Endpoint** | `POST /patient` |
 | **Authorization** | Doctor |
-| **Description** | Creates a new patient |
+| **Description** | Creates a new Patient |
 | **Data In** | `{ patientTitle, userName, lastName, password }` |
 | **Success Response** | `201 Created` |
 | **Error Response** | `403 Forbidden` |
@@ -173,7 +122,7 @@ The Medicine Planning System is a simple Java-based application designed for hos
 |---|---|
 | **Endpoint** | `DELETE /patient` |
 | **Authorization** | Doctor |
-| **Description** | Deletes a patient |
+| **Description** | Deletes a Patient |
 | **Data In** | `{ userName }` |
 | **Success Response** | `200 OK` |
 | **Error Response** | `404 Not Found` |
@@ -187,9 +136,9 @@ The Medicine Planning System is a simple Java-based application designed for hos
 |---|---|
 | **Endpoint** | `GET /medicines` |
 | **Authorization** | Doctor |
-| **Description** | Returns medicine information |
+| **Description** | Returns medicine informations |
 | **Data In** | `None` |
-| **Data Out** | `{ medicineName, medicineQuantity, type(HUMAN or VETERINARY) }` |
+| **Data Out** | `{ medicineName, medicineQuantity, type }` |
 | **Success Response** | `200 OK` |
 | **Error Response** | `404 Not Found` |
 | **Error Response** | `403 Forbidden` |
@@ -203,7 +152,7 @@ The Medicine Planning System is a simple Java-based application designed for hos
 | **Endpoint** | `POST /medicine` |
 | **Authorization** | Doctor |
 | **Description** | Adds a new medicine |
-| **Data In** | `{ medicineName, medicineQuantity, type(HUMAN or VETERINARY) }` |
+| **Data In** | `{ medicineName, medicineQuantity, type) }` |
 | **Success Response** | `201 Created` |
 | **Error Response** | `403 Forbidden` |
 | **Error Response** | `409 Conflict` |
@@ -245,7 +194,7 @@ The Medicine Planning System is a simple Java-based application designed for hos
 | **Endpoint** | `POST /prescription/{patientID}` |
 | **Authorization** | Doctor |
 | **Description** | Assigns prescription to patient |
-| **Data In** | `{ doctorId, medicineId, patientId, instruction[], date }` |
+| **Data In** | `{ doctorId, medicineId, patientId, instructions[], date }` |
 | **Success Response** | `201 Created` |
 | **Error Response** | `404 Not Found` |
 | **Error Response** | `403 Forbidden` |
@@ -274,7 +223,7 @@ The Medicine Planning System is a simple Java-based application designed for hos
 | **Authorization** | Patient |
 | **Description** | Returns logged-in patient medicines |
 | **Data In** | `None` |
-| **Data Out** | `{ doctorId, medicineId, patientId, instruction[], date }` |
+| **Data Out** | `{ doctorId, medicineId, patientId, instructions[], date }` |
 | **Success Response** | `200 OK` |
 | **Error Response** | `403 Forbidden` |
 
