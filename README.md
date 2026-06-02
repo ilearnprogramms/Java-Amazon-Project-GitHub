@@ -7,7 +7,6 @@ The Prescription Planning System is an application designed for hospitals, pharm
 
 ### REQUIREMENTS
 
-## Healthcare Staff Functions
 * Healthcare staff (Doctors, Pharmacists, Nurses, and Veterinarians) can view patient information (GET).
 * Healthcare staff can add a new staff member (POST).
 * Healthcare staff can add a new patient (POST).
@@ -18,11 +17,9 @@ The Prescription Planning System is an application designed for hospitals, pharm
 * Healthcare staff can delete a medicine (DELETE).
 * Healthcare staff can delete a prescription (DELETE).
 * Healthcare staff can update medicine quantities (PUT).
-## Patient Functions
 * Patients can view their assigned medicines and prescriptions (GET).
 * Patients cannot access information belonging to other patients.
 * Patients cannot create, edit, or delete medicines or prescriptions.
-
 * Error messages will be shown for unavailable API URL accessing (WebSecurity SecurityConfig)
 
 ### UML Class Diagramm
