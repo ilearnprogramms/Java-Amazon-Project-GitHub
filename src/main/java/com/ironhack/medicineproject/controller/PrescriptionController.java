@@ -74,7 +74,7 @@ public class PrescriptionController {
     }
 
 
-    @DeleteMapping("/prescription")
+    @DeleteMapping("/prescription") // Delete Prescription with prescriptionID
     public ResponseEntity<?> deletePrescription(
             @RequestBody PrescriptionDTO prescriptionDTO) {
 

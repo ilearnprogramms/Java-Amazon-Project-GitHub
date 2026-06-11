@@ -35,7 +35,7 @@ public class DoctorDTO {
 
     @JsonProperty("username")
     @NotBlank(message = "Username cannot be empty")
-    @Size(min = 3, max = 20, message = "Name must be between 3 and 20 characters")
+    @Size(min = 3, max = 12, message = "Name must be between 3 and 12 characters")
     private String username;
 
     @JsonProperty("password")

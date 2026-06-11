@@ -4,7 +4,6 @@ import com.ironhack.medicineproject.dto.DoctorDTO;
 import com.ironhack.medicineproject.exceptions.SuccessResponse;
 import com.ironhack.medicineproject.model.DoctorModel;
 import com.ironhack.medicineproject.service.DoctorService;
-import jakarta.servlet.http.HttpServletRequest;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -23,7 +22,9 @@ public class DoctorController {
 
     @GetMapping("/welcome")
     public String greet() {
-        return "Welcome to Medicine Project!\n ";
+        return """
+                Welcome to Prescription System! \n
+                Please enter the username and password that's been provided to you by the Medical Staff to see the prescriptions.""";
     }
 
     @GetMapping("/doctors")
@@ -56,7 +57,7 @@ public class DoctorController {
                 ResponseEntity.ok(new SuccessResponse("Doctor Added", doctorDTO));
     }
 
-    @DeleteMapping("/doctor")
+    @DeleteMapping("/doctor") // Delete Medical Staff with their username
     public ResponseEntity deleteDoctor(@RequestBody DoctorDTO doctorDTO) {
 
         Logger doctorLogger = Logger.getLogger("DoctorController");

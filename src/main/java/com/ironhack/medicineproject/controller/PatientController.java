@@ -50,7 +50,7 @@ public class PatientController {
                 ResponseEntity.ok(new SuccessResponse("Patient added", patientDTO));
     }
 
-    @DeleteMapping("/patient")
+    @DeleteMapping("/patient") // Delete patient with their username
     public ResponseEntity<?> deletePatient(@RequestBody PatientDTO patientDTO) {
 
         Logger patientLogger = Logger.getLogger("PatientController");

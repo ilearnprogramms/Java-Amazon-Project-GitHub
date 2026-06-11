@@ -56,7 +56,7 @@ public class MyUserDetailsService implements UserDetailsService {
             );
         }
 
-        throw new UsernameNotFoundException("User not found");
+        throw new UsernameNotFoundException("We couldn't find any Medical Staff or Patient with the given credentials");
     }
 
 }

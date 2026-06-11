@@ -13,11 +13,9 @@ import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
-
 import java.io.IOException;
 import java.util.*;
 import java.util.stream.Collectors;
-
 import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
 
 public class CustomAuthorizationFilterLoginUsernamePassword extends UsernamePasswordAuthenticationFilter {
@@ -27,13 +25,12 @@ public class CustomAuthorizationFilterLoginUsernamePassword extends UsernamePass
         this.authenticationManager = authenticationManager;
     }
 
-
     @Override
     public Authentication attemptAuthentication(HttpServletRequest request, HttpServletResponse response) throws AuthenticationException {
-        System.out.println("In /api/login trying to authenticate a person ");
+        System.out.println("In /api/login Trying to authenticate a Medical Staff or Patient");
 
         String credentials = request.getHeader("Authorization");
-        String pair = new String(Base64.getDecoder().decode(credentials.substring(6)));  // skip "Basic "
+        String pair = new String(Base64.getDecoder().decode(credentials.substring(6)));  // skip "Basic"
         String username = pair.split(":")[0];
         String password = pair.split(":")[1];
 
@@ -45,7 +42,6 @@ public class CustomAuthorizationFilterLoginUsernamePassword extends UsernamePass
         System.out.println("Result of authentication is " + authenticate.isAuthenticated());
 
         return authenticate;
-
     }
 
     @Override
@@ -77,6 +73,5 @@ public class CustomAuthorizationFilterLoginUsernamePassword extends UsernamePass
 
         response.setContentType(APPLICATION_JSON_VALUE);
         new ObjectMapper().writeValue(response.getOutputStream(), tokens);
-
     }
 }

@@ -49,7 +49,7 @@ public class MedicineController {
                 ResponseEntity.ok(new SuccessResponse("Medicine added", medicineDTO));
     }
 
-    @PutMapping("/medicine/{medicineID}")
+    @PutMapping("/medicine/{medicineID}") // Update medicine quantity by entering new amount into JSON
     public ResponseEntity<?> updateMedicine (@PathVariable Long medicineID,
                                              @RequestBody MedicineDTO medicineDTO){
 
@@ -62,7 +62,7 @@ public class MedicineController {
                 ResponseEntity.ok(new SuccessResponse("Medicine quantity updated", updatedMedicine));
     }
 
-    @DeleteMapping("/medicine")
+    @DeleteMapping("/medicine") // Delete medicine with medicine name
     public ResponseEntity<?> deleteMedicine(@RequestBody MedicineDTO medicineDTO) {
 
         Logger medicineLogger = Logger.getLogger("MedicineController");

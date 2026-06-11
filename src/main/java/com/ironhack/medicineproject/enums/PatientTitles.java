@@ -5,6 +5,6 @@ public enum PatientTitles {
     MR,
     MS,
     MRS,
-    MX,          // for gender-neutral titles
+    MX,          // For gender-neutral titles and patients who don't want to specify their gender
 
 }
