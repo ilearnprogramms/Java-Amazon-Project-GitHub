@@ -1,16 +1,16 @@
-# Java-Amazon-Project-GitHub
+# Java-Prescription-Project-GitHub
 IronHack Week 13 Final Project
 
-## ABSTRACT
+## Abstract
 
 The Prescription Planning System is an application designed for hospitals, pharmacies, and veterinary clinics to manage patient medications and records efficiently. The system provides a Backend-for-Frontend API that enables healthcare applications to access and manage patient data. Authorized Healthcare staff can create, edit, and remove medicines from the system, as well as create and manage prescriptions for patients. Healthcare staff can create, update, or delete patient and doctor profiles and add medical instructions or notes for patients. Patients then can view their assigned medications and prescriptions through client applications connected to the system. To ensure privacy and security, patients cannot modify their medications or access information belonging to other patients.
 
-## SETUP
+## Setup
 The project development began with defining the core idea and identifying the system requirements based on real-world healthcare workflows. Before implementation, I created a UML Class Diagram to design the application's structure and relationships between entities such as Patients, Healthcare Staff, Medicines, and Prescriptions.
 API endpoints and authorization requirements were planned and documented to establish a clear Backend-for-Frontend (BFF) architecture. Once the project structure was finalized, I designed the database schema and implemented it in MySQL.
 Development was carried out incrementally by creating models, repositories, services, controllers, and security configurations, followed by endpoint testing and validation using Postman.
 
-## TECHNOLOGIES USED
+## Technologies Used
 
 ### Programming Language
 * Java 21
@@ -30,7 +30,7 @@ Development was carried out incrementally by creating models, repositories, serv
 * RESTful API Design
 * UML Class Diagrams
 
-## REQUIREMENTS
+## Requirements
 
 * Healthcare staff (Doctors, Pharmacists, Nurses, and Veterinarians) can view patient information (GET).
 * Healthcare staff can add a new staff member (POST).
@@ -51,9 +51,9 @@ Development was carried out incrementally by creating models, repositories, serv
 
 <img width="555" height="680" alt="image(2)" src="https://github.com/user-attachments/assets/c640610f-35a5-4bf7-a207-57967af85730" />
 
-### API Documentation
+## API Documentation
 
-## 1. Unauthorized Access
+### 1. Unauthorized Access
 
 | Field | Value |
 |---|---|
@@ -66,7 +66,7 @@ Development was carried out incrementally by creating models, repositories, serv
 
 ---
 
-## 2. Get Doctor Data
+### 2. Get Doctor Data
 
 | Field | Value |
 |---|---|
@@ -81,7 +81,7 @@ Development was carried out incrementally by creating models, repositories, serv
 
 ---
 
-## 3. Add Doctor
+### 3. Add Doctor
 
 | Field | Value |
 |---|---|
@@ -95,7 +95,7 @@ Development was carried out incrementally by creating models, repositories, serv
 
 ---
 
-## 4. Delete Doctor
+### 4. Delete Doctor
 
 | Field | Value |
 |---|---|
@@ -109,7 +109,7 @@ Development was carried out incrementally by creating models, repositories, serv
 
 ---
 
-## 5. Get Patient Data
+### 5. Get Patient Data
 
 | Field | Value |
 |---|---|
@@ -124,7 +124,7 @@ Development was carried out incrementally by creating models, repositories, serv
 
 ---
 
-## 6. Add Patient
+### 6. Add Patient
 
 | Field | Value |
 |---|---|
@@ -138,7 +138,7 @@ Development was carried out incrementally by creating models, repositories, serv
 
 ---
 
-## 7. Delete Patient
+### 7. Delete Patient
 
 | Field | Value |
 |---|---|
@@ -152,7 +152,7 @@ Development was carried out incrementally by creating models, repositories, serv
 
 ---
 
-## 8. Get Medicine Data
+### 8. Get Medicine Data
 
 | Field | Value |
 |---|---|
@@ -167,7 +167,7 @@ Development was carried out incrementally by creating models, repositories, serv
 
 ---
 
-## 9. Add Medicine
+### 9. Add Medicine
 
 | Field | Value |
 |---|---|
@@ -181,7 +181,7 @@ Development was carried out incrementally by creating models, repositories, serv
 
 ---
 
-## 10. Update Medicine Quantity
+### 10. Update Medicine Quantity
 
 | Field | Value |
 |---|---|
@@ -195,7 +195,7 @@ Development was carried out incrementally by creating models, repositories, serv
 
 ---
 
-## 11. Delete Medicine
+### 11. Delete Medicine
 
 | Field | Value |
 |---|---|
@@ -209,7 +209,7 @@ Development was carried out incrementally by creating models, repositories, serv
 
 ---
 
-## 12. Assign Prescription
+### 12. Assign Prescription
 
 | Field | Value |
 |---|---|
@@ -223,7 +223,7 @@ Development was carried out incrementally by creating models, repositories, serv
 
 ---
 
-## 13. Delete Prescription
+### 13. Delete Prescription
 
 | Field | Value |
 |---|---|
@@ -237,7 +237,7 @@ Development was carried out incrementally by creating models, repositories, serv
 
 ---
 
-## 14. View Own Medicines
+### 14. View Own Medicines
 
 | Field | Value |
 |---|---|
@@ -249,8 +249,7 @@ Development was carried out incrementally by creating models, repositories, serv
 | **Success Response** | `200 OK` |
 | **Error Response** | `403 Forbidden` |
 
-## Future Plannings
-
+## Future Improvements
 The Prescription Planning System can be extended with additional functionality to improve usability, scalability, and healthcare workflow management.
 
 ### Planned future improvements include:
@@ -262,7 +261,7 @@ The Prescription Planning System can be extended with additional functionality t
 * Supporting file attachments such as medical reports and treatment documents.
 * Expanding API coverage to support integration with external healthcare management systems.
 
-## RESOURCES
+## Resources
 ### The development of this project was supported by a variety of learning resources and guidance:
 
 * IronHack Bootcamp course materials and exercises.
@@ -273,5 +272,5 @@ The Prescription Planning System can be extended with additional functionality t
 * Official Spring Framework and Java documentations.
 * Community discussions and technical articles from developer forums.
 
-### TEAM MEMBERS
+### Team
 * Solo created by @ilearnprogramms
