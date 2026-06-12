@@ -49,7 +49,7 @@ Development was carried out incrementally by creating models, repositories, serv
 
 ### UML Class Diagramm
 
-<img width="555" height="680" alt="image(2)" src="https://github.com/user-attachments/assets/c640610f-35a5-4bf7-a207-57967af85730" />
+<img width="1132" height="1390" alt="64ad7378-f8a4-42e8-a99b-703ac4aad8a6" src="https://github.com/user-attachments/assets/2e289514-0328-4a0e-b08e-716f9ee366ef" />
 
 ## API Documentation
 
